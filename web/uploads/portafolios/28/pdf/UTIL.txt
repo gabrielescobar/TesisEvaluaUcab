@@ -1,0 +1,83 @@
+$estudiante = $this->get('security.context')->getToken()->getUser();
+
+
+window.location.href= (Routing.generate('inicio'));
+
+
+Funcion para cerrar los alerts 
+$(".alert").alert();
+window.setTimeout(function() { $(".alert").alert('close'); }, 2000);
+
+{{ registro.horaCierre|date('d/m/Y H:i', timezone="America/Caracas") }}
+
+
+return new Response(json_encode($secciones));
+
+
+$(document).ready(function(){
+  var area = document.getElementById('form_138');
+          area.innerHTML = "Fifth Avenue, New York City";    
+  
+});
+
+
+
+<form method="link" action="{{ path('ver_examen',{'idExamen':pregunta.examen.id}) }}" > 
+                <button id="bBack2" type="submit" class="btn btn-info" >Regresar</button>
+            </form>
+
+   $breadcrumbs = $this->get("white_october_breadcrumbs");
+
+    // Pass "_demo" route name without any parameters
+    $breadcrumbs->addRouteItem("Demo", "_demo");
+
+    // Pass "_demo_hello" route name with parameters
+    $breadcrumbs->addRouteItem("Hello Breadcrumbs", "_demo_hello", array(
+        'name' => 'Breadcrumbs',
+    ));
+
+
+  <button  onclick="location.href='{{asset('rubricas/public_html/crear.html?id_profesor='~app.user.id~'') }}'" class="btn btn-danger" >Crear Rúbrica</button>
+
+
+ <div id="dialog" style="visibility: hidden;  position: absolute; top:6.4em;  right: 4em;" class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>¡Examen Eliminado!</strong> 
+    </div>
+
+
+<script> 
+
+    $(document).ready(function(){
+      var valor;
+       $("#pregunta li a").each(function(){
+          valor= $(this).text();
+          $(this).html(valor);
+          //alert(valor);
+           
+       });          
+});
+
+</script>
+
+
+Raya Azul larga 
+  <hr style=" margin-left: -2em;width: 67.8em;border: 0; height: 5px; box-shadow: inset 0 12px 12px -12px #1ea3e1;">
+ 
+
+$message = \Swift_Message::newInstance('Cambiar Contraseña');
+            $message->setFrom('evalua.ucab@gmail.com');
+            $message->setTo($email);
+
+            $message->setBody(
+                    '<html>' .
+                    ' <head> <img src="' . $message->embed(\Swift_Image::fromPath('images/logoHeader.png')) . '" /></head>' .
+                    ' <body>' .
+                    ' <br><br><br><span style="font-size:18px">Estimado profesor, usted ha soliciado cambiar su contraseña. Siga los pasos en el siguiente link </span> ' . $url .
+                    ' </body>' .
+                    '<br><br><br><footer>EvaluaUcab Todos los derechos reservados</footer>' .
+                    '</html>', 'text/html' // Mark the content-type as HTML
+            );
+            $this->get('mailer')->send($message);    
+

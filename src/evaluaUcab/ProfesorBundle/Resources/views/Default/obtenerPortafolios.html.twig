@@ -1,0 +1,85 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = true %}
+{% block title %}Portafolio{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/crearPortafolio.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioProfesor.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/alertCustomize.css') }}" rel="stylesheet" type="text/css" />
+
+{% endblock %}
+
+{% block body %}
+
+{% include '::header.html.twig' %}
+{% include 'ProfesorBundle:Default:navProfesor.html.twig' %}
+{{ wo_render_breadcrumbs() }}
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header" id="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Editar Portafolio</h4>
+                            </div>
+                            <div class="modal-body">      
+                                <span class="span" > Fecha de cierre: </span> 
+                                <input style="margin-left: 2em; margin-top: 1em; width: 11em; height: 2em" id="fechaCierre" name="fechaCierre" type="date" class="fecha" required > <br><br>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-success" onclick="alertDGC('Modificar fecha de cierre','prompt','updatePortafolio',0,0,0)">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+<form method="link" action="{{path('crear_portafolio')}}" > 
+   <button id="bCrearPortafolio" type="submit" class="btn btn-danger" >Crear portafolio</button>
+ </form>
+<section id="recuadroPortafolio"> 
+ <h2>Mis Portafolios </h2>
+ <hr style="border: 0; height: 5px; box-shadow: inset 0 12px 12px -12px #1ea3e1;">
+
+      {% for seccion in pagination %}
+     {# si existe un portafolio para la seccion se muestra#}
+      {%if seccion.portafolio%}
+     <li style="margin-left: 3em;"> <a title="Ver" href="{{ path('ver_portafolio_profesor',{'idSeccion':seccion.id}) }}">
+     Sección {{seccion.codigo}} Fecha de cierre {{ seccion.portafolio.fechaCierre|date('d/m/Y', timezone="America/Caracas")}}</a> 
+            {%if seccion.portafolio.tipo == 'mixto'%}
+               <img title="Portafolio Mixto" id="logo" src="{{asset('bundles/application/images/mixto.png')}}"/>
+            {%else%}
+               <img title="Portafolio Individual" id="logo" src="{{asset('bundles/application/images/individual.png')}}"/>
+            {%endif%}
+     <a title="Eliminar" style="float:right; margin-right: 2em;"  onclick="alertDGC('Eliminar Portafolio','prompt','deletePortafolio',{{seccion.portafolio.id}},0,0)" > <img id="logo" src="{{asset('bundles/application/images/trash.png')}}"/> </a>
+     <a title="Editar" data-toggle="modal" data-target="#editModal" onclick="editarPortafolio({{seccion.portafolio.id}})" style="float:right;  " href="" > <img id="logo" src="{{asset('bundles/application/images/edicionIcon.png')}}"/> </a>
+                       
+      </li>
+     
+     <hr style="margin-left: -2.8em">
+      {%endif%}
+{% endfor %}
+ 
+    <div id="pag" class="navigation">
+      {{ knp_pagination_render(pagination) }}
+    </div>   
+        
+</section>
+
+{% endblock %} 
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+<script src="{{ asset('bundles/profesor/js/dialogo.js') }}"></script>
+<script src="{{ asset('bundles/profesor/js/portafolioFunctions.js') }}"></script>
+
+
+{% endblock %}

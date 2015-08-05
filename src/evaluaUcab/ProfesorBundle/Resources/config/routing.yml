@@ -1,0 +1,401 @@
+#Routing Profesor#
+
+  
+profesor_edit:
+    path: /edit/{idProfesor}
+    defaults: {_controller: ProfesorBundle:Default:editPerfil}
+
+profesor_update:
+    path: /update/{idProfesor}
+    defaults: {_controller: ProfesorBundle:Default:updatePerfil}
+    requirements: { _method: post }
+         
+seccion:
+    path: /seccion/{idProfesor}
+    defaults: {_controller: ProfesorBundle:Seccion:ver}
+    options:
+        expose: true
+     
+borrar_seccion:
+    path: /borrarSeccion/{idSeccion}
+    defaults: {_controller: ProfesorBundle:Seccion:borrarSeccion}
+    options:
+        expose: true
+        
+crear_seccion:
+    path: /crearSeccion/{id}
+    defaults: {_controller: ProfesorBundle:Seccion:crear}
+
+solicitudes_profesor:
+    path: /solicitudes
+    defaults: {_controller: ProfesorBundle:Solicitud:solicitudes}
+
+solicitud_seccion:
+    path: /consultarSolicitud
+    defaults: {_controller: ProfesorBundle:Solicitud:consultarSolicitud}
+
+aceptar_solicitud:
+    path: /aceptarSolicitud/{id}
+    defaults: {_controller: ProfesorBundle:Solicitud:aceptar}
+
+rechazar_solicitud:
+    path: /rechazarSolicitud/{id}
+    defaults: {_controller: ProfesorBundle:Solicitud:rechazar}
+
+alumnos_aceptados:
+    path: /alumnosEnSeccion/{id}
+    defaults: {_controller: ProfesorBundle:Seccion:alumnosEnSeccion}
+    options:
+        expose: true
+        
+estudiantes_en_seccion:
+    path: /alumnos/{idSeccion}
+    defaults: {_controller: ProfesorBundle:Portafolio:estudiantesEnSeccion}
+        
+eliminar_seccion:
+    path: /eliminarSeccion/{id}
+    defaults: {_controller: ProfesorBundle:Seccion:eliminar}
+ 
+crear_portafolio:
+    path: /crearPortafolio/
+    defaults: {_controller: ProfesorBundle:Portafolio:crear}
+ 
+ver_portafolio_profesor:
+    path: /verPortafolio/{idSeccion}
+    defaults: {_controller: ProfesorBundle:Portafolio:verPortafolio}
+
+portafolios:
+    path: /portafolios
+    defaults: {_controller: ProfesorBundle:Portafolio:seleccionarMateria}
+    options:
+        expose: true
+obtener_portafolios:
+    path: /obtenerPortafolios
+    defaults: {_controller: ProfesorBundle:Portafolio:obtenerPortafolios}
+
+borrar_portafolio:
+    path : /borrarPortafolio/{idPortafolio}
+    defaults: {_controller: ProfesorBundle:Portafolio:borrarPortafolio}
+    options:
+        expose: true  
+
+portafolio_examenes_profesor:
+    path : /viewExamenes/{idPortafolio}
+    defaults: {_controller: ProfesorBundle:Portafolio:viewExamenes}
+    options:
+        expose: true
+
+borrar_examen_portafolio:
+    path: /borrarExamenPortafolio/{idExamenPortafolio}
+    defaults: {_controller: ProfesorBundle:Portafolio:borrarExamenPortafolio}
+    options:
+        expose: true
+
+update_portafolio:
+    path: /updatePortafolio/{idPortafolio}/{value}
+    defaults: {_controller: ProfesorBundle:Portafolio:updatePortafolio}
+    options:
+        expose: true
+        
+form_editar_examen_portafolio:
+    path: /formEditarExamenPortafolio/{idExamenPortafolio}
+    defaults: {_controller: ProfesorBundle:Portafolio:formEditarExamenPortafolio}
+    
+editar_examen_portafolio:
+    path: /editarExamenPortafolio/{idExamenPortafolio}
+    defaults: {_controller: ProfesorBundle:Portafolio:editarExamenPortafolio}
+    
+detalle_examen_portafolio:
+    path: /detalleExamenPortafolio/{idExamenPortafolio}
+    defaults: {_controller: ProfesorBundle:Portafolio:detalleExamenPortafolio}
+
+examenes:
+    path: /examenes
+    defaults: {_controller: ProfesorBundle:Examen:index}
+    options:
+        expose: true
+              
+importar_examen:
+    path: /importarExamen/{idPortafolio}
+    defaults: {_controller: ProfesorBundle:Portafolio:importarExamen}
+    
+crear_examen:
+    path: /crearExamen
+    defaults: {_controller: ProfesorBundle:Examen:crearExamen}
+    
+borrar_examen:
+    path: /borrarExamen/{idExamen}
+    defaults: {_controller: ProfesorBundle:Examen:borrarExamen}
+    options:
+        expose: true
+    
+registrar_examen:
+    path: /registrarExamen
+    defaults: {_controller: ProfesorBundle:Examen:registrarExamen}
+    
+preguntas:
+    path: /agregarPreguntas/{id}
+    defaults: {_controller: ProfesorBundle:Examen:agregarPregunta}
+
+registrar_pregunta:
+    path: /registrarPregunta/{id}
+    defaults: {_controller: ProfesorBundle:Examen:registrarPregunta}
+    
+respuestas:
+    path: /agregarRespuesta/{idExamen}/{idPregunta}
+    defaults: {_controller: ProfesorBundle:Examen:agregarRespuesta}
+    
+registrar_respuesta:
+    path: /registrarRespuesta/{idExamen}/{idPregunta}
+    defaults: {_controller: ProfesorBundle:Examen:registrarRespuesta}
+        
+fin_examen: 
+    path: /finExamen
+    defaults: {_controller: ProfesorBundle:Examen:finExamen}
+
+fin_preguntas: 
+    path: /finPregunta/{idExamen}
+    defaults: {_controller: ProfesorBundle:Examen:finPreguntas}
+    options:
+        expose: true
+fin_respuestas:
+    path: /finRespuestas/{id}
+    defaults: {_controller: ProfesorBundle:Examen:finRespuestas}
+    options:
+        expose: true
+
+eliminar_respuesta:
+    path: /eliminarRespuesta/{idPregunta}/{idRespuesta}
+    defaults: {_controller: ProfesorBundle:Examen:eliminarRespuesta}
+    options:
+        expose: true
+
+eliminar_pregunta:
+    path: /eliminarPregunta/{idExamen}/{idPregunta}
+    defaults: {_controller: ProfesorBundle:Examen:eliminarPregunta}
+    options:
+        expose: true
+
+ver_examen:
+    path: /verExamen/{idExamen}
+    defaults: {_controller: ProfesorBundle:Examen:verExamen}
+
+ver_pregunta:
+    path: /verPregunta/{idPregunta}
+    defaults: {_controller: ProfesorBundle:Examen:verPregunta}
+
+editar_examen:
+    path: /editarExamen/{idExamen}
+    defaults: {_controller: ProfesorBundle:Examen:editarExamen}
+
+
+        
+update_examen:
+    path: /updateExamen/{idExamen}
+    defaults: {_controller: ProfesorBundle:Examen:updateExamen}
+    
+prev_editar_preguntas:
+    path: /prevEditarPreguntas/{idExamen}
+    defaults: {_controller: ProfesorBundle:Examen:prevEditarPreguntas}
+
+editar_pregunta: 
+    path: /editarPregunta/{idPregunta}
+    defaults: {_controller: ProfesorBundle:Examen:editarPregunta}
+    
+update_pregunta:
+    path: /updatePregunta/{idPregunta}
+    defaults: {_controller: ProfesorBundle:Examen:updatePregunta}
+    
+prev_editar_respuestas:
+    path: /prevEditarRespuestas/{idPregunta}
+    defaults: {_controller: ProfesorBundle:Examen:prevEditarRespuestas}
+    
+editar_respuesta: 
+    path: /editarRespuesta/{idRespuesta}
+    defaults: {_controller: ProfesorBundle:Examen:editarRespuesta}
+
+update_respuesta:
+    path: /updateRespuesta/{idRespuesta}
+    defaults: {_controller: ProfesorBundle:Examen:updateRespuesta}
+    
+form_grupo: 
+    path: /formGrupo/{idSeccion}
+    defaults: {_controller: ProfesorBundle:Grupo:formGrupo}
+
+grupos:
+    path: /grupos/{idPortafolio}
+    defaults: {_controller: ProfesorBundle:Grupo:viewGrupos}
+    options:
+        expose: true
+
+crear_grupo:
+    path: /crearGrupo/{idSeccion}
+    defaults: {_controller: ProfesorBundle:Grupo:crearGrupo}
+
+borrar_grupo:
+    path: /borrarGrupo/{idPortafolio}/{idGrupo}
+    defaults: {_controller: ProfesorBundle:Grupo:borrarGrupo}
+    options:
+        expose: true
+
+ver_alumnos_grupo:
+    path: /verAlumnos/{idPortafolio}/{idGrupo}
+    defaults: {_controller: ProfesorBundle:Grupo:verAlumnosGrupo}
+
+editar_grupo:
+    path: /editarGrupo/{idPortafolio}/{idGrupo}
+    defaults: {_controller: ProfesorBundle:Grupo:formEditarGrupo}
+
+form_estudiante_grupo:
+    path: /formEstudianteGrupo/{idSeccion}/{idGrupo}
+    defaults: {_controller: ProfesorBundle:Grupo:formAddEstudianteGrupo}
+
+borrar_estudiante_grupo:
+    path: /borrarEstudianteGrupo/{idEstudianteGrupo}
+    defaults: {_controller: ProfesorBundle:Grupo:borrarEstudianteGrupo}
+    options:
+        expose: true
+        
+agregar_estudiante_grupo:
+    path: /addEstudianteGrupo/{idSeccion}/{idGrupo}
+    defaults: {_controller: ProfesorBundle:Grupo:addEstudianteGrupo}
+    
+ajax_max_fecha:
+    path: /maxFecha/{idPortafolio}
+    defaults: {_controller: ProfesorBundle:Portafolio:maxFecha}
+    options:
+        expose: true
+        
+calendario_profesor:
+    path: /calendarioProfesor/{idSeccion}
+    defaults: {_controller: ProfesorBundle:Portafolio:calendarioProfesor}
+    
+asignaciones:
+    path: /asignaciones/{idPortafolio}
+    defaults: {_controller: ProfesorBundle:Asignacion:viewAsignaciones}
+    options:
+        expose: true
+        
+ver_asignacion:
+    path: /verAsignacion/{idAsignacion}
+    defaults: {_controller: ProfesorBundle:Asignacion:verAsignacion}
+ 
+ver_asignaciones_estudiante:
+    path: /verAsignacionesEstudiante/{idPortafolio}/{idEstudiante}
+    defaults: {_controller: ProfesorBundle:Asignacion:verAsignacionesEstudiante}
+
+ver_asignaciones_grupo:
+    path: /verAsignacionesGrupo/{idPortafolio}/{idGrupo}
+    defaults: {_controller: ProfesorBundle:Asignacion:verAsignacionesGrupo}
+   
+registrar_asignacion:
+    path: /registrarAsignacion/{idPortafolio}
+    defaults: {_controller: ProfesorBundle:Asignacion:registrarAsignacion}
+    options:
+        expose: true
+borrar_asignacion:
+    path: /borrarAsignacion/{idAsignacion}
+    defaults: {_controller: ProfesorBundle:Asignacion:borrarAsignacion}
+    options:
+        expose: true
+editar_asignacion:
+    path: /updateAsignacion/{idAsignacion}
+    defaults: {_controller: ProfesorBundle:Asignacion:editarAsignacion}
+    options:
+        expose: true
+
+form_editar_asignacion:
+    path: /formEditarAsignacion/{idAsignacion}
+    defaults: {_controller: ProfesorBundle:Asignacion:formEditarAsignacion}
+    
+portafolio_estudiante_ver:
+    path: /verPortafolioEstudiante/{idPortafolio}/{idEstudiante}
+    defaults: {_controller: ProfesorBundle:Portafolio:verPortafolioEstudiante}
+
+portafolio_grupo_ver:
+    path: /verPortafolioGrupo/{idPortafolio}/{idGrupo}
+    defaults: {_controller: ProfesorBundle:Portafolio:verPortafolioGrupo}
+
+
+ver_examenes_estudiante:
+    path: /verExamenesEstudiante/{idPortafolio}/{idEstudiante}
+    defaults: {_controller: ProfesorBundle:Portafolio:verExamenesEstudiante}
+ 
+ver_examenes_grupo:
+    path: /verExamenesGrupo/{idPortafolio}/{idGrupo}
+    defaults: {_controller: ProfesorBundle:Portafolio:verExamenesGrupo}
+ 
+ 
+finalizar_correccion_examen:
+    path: /finalizarCorreccionExamen/{idHistoricoExamen}/{idExamenPortafolio}/{idEstudianteSeccion}/{idPregunta}
+    defaults: {_controller: ProfesorBundle:Portafolio:finalizarCorreccionExamen}
+    
+finalizar_correccion_examen_grupo:
+    path: /finalizarCorreccionExamenGrupo/{idHistoricoExamen}/{idExamenPortafolio}/{idEstudianteGrupo}/{idPregunta}
+    defaults: {_controller: ProfesorBundle:Portafolio:finalizarCorreccionExamenGrupo}
+  
+    
+preguntas_a_calificar:
+    path: /preguntasACalificar/{idHistoricoExamen}/{idExamenPortafolio}/{idEstudianteSeccion}
+    defaults: {_controller: ProfesorBundle:Portafolio:preguntasACalificar}
+
+preguntas_a_calificar_grupo:
+    path: /preguntasACalificarGrupo/{idHistoricoExamen}/{idExamenPortafolio}/{idEstudianteGrupo}
+    defaults: {_controller: ProfesorBundle:Portafolio:preguntasACalificarGrupo}
+
+
+form_calificar_escrito:
+    path: /formCalificar/{idHistoricoExamen}/{idExamenPortafolio}/{idPregunta}/{idEstudianteSeccion}
+    defaults: {_controller: ProfesorBundle:Portafolio:formCalificarEscrito}
+    
+form_calificar_escrito_grupo:
+    path: /formCalificarGrupo/{idHistoricoExamen}/{idExamenPortafolio}/{idPregunta}/{idEstudianteGrupo}
+    defaults: {_controller: ProfesorBundle:Portafolio:formCalificarEscritoGrupo}
+    
+form_editar_calificar_escrito:
+    path: /formEditarCalificar/{idHistoricoExamen}/{idExamenPortafolio}/{idPregunta}/{idEstudianteSeccion}
+    defaults: {_controller: ProfesorBundle:Portafolio:formEditarCalificarEscrito}
+
+form_editar_calificar_escrito_grupo:
+    path: /formEditarCalificarGrupo/{idHistoricoExamen}/{idExamenPortafolio}/{idPregunta}/{idEstudianteGrupo}
+    defaults: {_controller: ProfesorBundle:Portafolio:formEditarCalificarEscritoGrupo}
+
+calificar_escrito:
+    path: /calificar/{idHistoricoExamen}/{idExamenPortafolio}/{idPregunta}/{idEstudianteSeccion}
+    defaults: {_controller: ProfesorBundle:Portafolio:calificarEscrito}
+editar_calificar_escrito:
+    path: /editarCalificar/{idHistoricoExamen}/{idExamenPortafolio}/{idPregunta}/{idEstudianteSeccion}
+    defaults: {_controller: ProfesorBundle:Portafolio:editarCalificarEscrito}
+
+editar_calificar_escrito_grupo:
+    path: /editarCalificarGrupo/{idHistoricoExamen}/{idExamenPortafolio}/{idPregunta}/{idEstudianteGrupo}
+    defaults: {_controller: ProfesorBundle:Portafolio:editarCalificarEscritoGrupo}
+    
+calificar_escrito_grupo:
+    path: /calificarGrupo/{idHistoricoExamen}/{idExamenPortafolio}/{idPregunta}/{idEstudianteGrupo}
+    defaults: {_controller: ProfesorBundle:Portafolio:calificarEscritoGrupo}
+    
+get_listas_rubricas:
+    path: /getListasRubricas
+    defaults: {_controller: ProfesorBundle:Portafolio:obtenerListasRubricas}
+
+rubricas:
+    path: /rubricas
+    defaults: {_controller: ProfesorBundle:Rubrica:index}
+    options:
+        expose: true
+        
+borrar_estudiante_seccion:
+    path: /borrarEstudianteSeccion/{idEstudianteSeccion}
+    defaults: {_controller: ProfesorBundle:Seccion:borrarEstudianteSeccion}
+    options:
+        expose: true
+        
+material_apoyo:
+    path: /archivos/{idPortafolio}
+    defaults: {_controller: ProfesorBundle:MaterialApoyo:viewMaterialApoyo}
+
+add_material:
+    path: /agregarMaterial/{idPortafolio}
+    defaults: {_controller: ProfesorBundle:MaterialApoyo:addMaterial}
+    

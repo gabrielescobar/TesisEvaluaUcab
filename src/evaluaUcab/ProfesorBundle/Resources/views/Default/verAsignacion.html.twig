@@ -1,0 +1,96 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = true %}
+{% block title %}Editar Asignación{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioProfesor.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/portafolioProfesor.css')}}" rel="stylesheet" type="text/css"/>
+
+{% endblock %}
+
+
+{% block body %}
+
+{% include '::header.html.twig' %}
+{% include 'ProfesorBundle:Default:navProfesor.html.twig' %}
+{% include 'ProfesorBundle:Default:menuPortafolioProfesor.html.twig' %}
+
+{% for flashMessage in app.session.flashbag.get('warning') %}
+<div id="myAlert" class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+    <strong>{{ flashMessage }}</strong> 
+</div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+<div id="myAlert" class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+    <strong>{{ flashMessage }}</strong> 
+</div>
+{% endfor %}
+
+
+<section id="contenidoPortafolio">
+
+
+    <h2>Ver Asignación </h2>
+    <hr style="margin-left: -2em; width: 67.8em; border: 0; height: 5px; box-shadow: inset 0 12px 12px -12px #1ea3e1;">
+    
+    <span>Título: <pre style="width: 80%;  font-size: 16px; margin-left: 5.5em; margin-top: -2em; font-family: Comic Sans MS; background: none;border: none; resize: none;">{{asignacion.titulo}} </pre></span> 
+    <span>Descripcion: </span> <pre style="width: 80%; font-size: 16px; margin-left: 8.2em; margin-top: -2em; font-family: Comic Sans MS; background: none;border: none; resize: none;">{{asignacion.descripcion}} </pre>
+      {%if asignacion.tipo == 'presentacion'%}
+          <span>Tipo: Presentacion </span><br><br>
+      {%elseif asignacion.tipo == 'mapamental'%}
+          <span>Tipo: Mapa Mental</span><br><br>
+       {%elseif asignacion.tipo == 'autoevaluacion'%}
+          <span>Tipo: Autoevaluación</span><br><br>
+       {%elseif asignacion.tipo == 'coevaluacion'%}
+           <span>Tipo: Coevaluación</span><br><br>
+      {%endif%}
+          
+      {%if asignacion.estatus == 0%}
+          <span>Estatus: Desactivada </span><br><br>
+      {%else%}
+          <span>Estatus: Activada</span><br><br>
+      {%endif%}
+    <span> Porcentaje: {{asignacion.porcentaje}}% </span><br>
+    {%if asignacion.rubrica == null %}
+       <br><span> Herramienta de Evaluación: Lista-{{asignacion.lista.titulo}}</span>
+    {%else%}
+       <br><span> Herramienta de Evaluación: <pre style="width: 80%;  font-size: 16px; margin-left: 16em; margin-top: -2em; font-family: Comic Sans MS; background: none;border: none; resize: none;"> Rúbrica-{{asignacion.rubrica.titulo}}</pre>
+    {%endif%}
+    <span> Fecha de inicio: {{asignacion.fechaInicio |date("Y-m-d")}}</span><br><br>
+    
+    <span> Fecha de cierre: {{asignacion.fechaCierre |date("Y-m-d")}} {{asignacion.horaCierre |date("H:m:s")}}</span><br><br>
+    
+      <form method="link" action="{{ path('asignaciones',{'idPortafolio':portafolio.id}) }}" > 
+          <button style="margin-left: 26.5em; margin-top:3em " type="submit" class="btn btn-info" >Regresar</button>
+    </form>
+   
+
+
+</section>
+
+
+
+
+
+{% endblock %} 
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+<script src="{{ asset('bundles/profesor/js/importarExamen.js') }}"></script>
+{% endblock %}
+
+
+
+

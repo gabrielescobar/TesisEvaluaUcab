@@ -1,0 +1,76 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = true %}
+{% block title %}Exámen{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/examenes.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioProfesor.css') }}" rel="stylesheet" type="text/css" />
+
+
+{% endblock %}
+
+{% block body %}
+
+{% include '::header.html.twig' %}
+{% include 'ProfesorBundle:Default:navProfesor.html.twig' %}
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+<div id="myAlert" class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+    <strong>{{ flashMessage }}</strong> 
+</div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('warning') %}
+<div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+    <strong>{{ flashMessage }}</strong> 
+</div>
+{% endfor %}
+
+<section id="recuadroEditExamen"> 
+    <form action="{{ path('update_examen',{'idExamen': examen.id}) }}" method="post" >
+        <h2>Editar Examen</h2>
+        <hr>
+        <span class="marginSpan">Título: </span> 
+        <input id="form_titulo" name="form_titulo" value="{{examen.titulo}}" class="titulo"> </input> <br><br>
+       
+        <span class="marginSpan">Descripción: </span>
+        <textarea id="form_descripcion" name="form_descripcion" class="area">{{examen.descripcion}} </textarea>  <br>
+
+        <br>
+
+        <button id="bEditExamen" type="submit" class="btn btn-success" >Modificar</button>
+
+    </form>
+
+    <form action="{{ path('prev_editar_preguntas',{'idExamen': examen.id}) }}" method="post" >
+
+        <button id="bEditP" type="submit" class="btn btn-danger" >Editar Preguntas</button>
+
+    </form>
+
+    <form action="{{ path('examenes') }}" method="post" >
+
+        <button id="bEditBack"  type="submit" class="btn btn-info" >Regresar</button>
+
+    </form>
+
+</section>
+
+{% endblock %} 
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+
+
+{% endblock %}

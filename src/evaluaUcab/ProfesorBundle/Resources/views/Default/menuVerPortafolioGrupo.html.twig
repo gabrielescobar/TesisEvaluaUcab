@@ -1,0 +1,9 @@
+<div>Grupo: {{grupo.nombre}}</div>
+<nav id="menuLateral">
+   
+          <ul>
+           <li style="height: 4em; width: 14em;" ><a href="{{path('ver_asignaciones_grupo',{'idPortafolio':portafolio.id,'idGrupo':grupo.id})}}""><p style=" margin-left: 3em;">Asignaciones</p></a></li>
+           <li style="height: 4em; width: 14em;"><a href="{{path('ver_examenes_grupo', {'idPortafolio':portafolio.id, 'idGrupo':grupo.id})}}"><p style=" margin-left: 3.4em;">Examenes</p></a></li>
+           <li style="height: 4em; width: 14em;"><a href="#"><p style=" margin-left: 4.3em;">Notas</p></a></li>
+          </ul>
+  </nav>

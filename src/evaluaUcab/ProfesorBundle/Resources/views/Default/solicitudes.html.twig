@@ -1,0 +1,68 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = true %}
+{% block title %}Solicitudes{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioProfesor.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/gestionSolicitudes.css') }}" rel="stylesheet" type="text/css" />
+
+
+{% endblock %}
+
+
+{% block body %}
+
+{% include '::header.html.twig' %}
+{% include 'ProfesorBundle:Default:navProfesor.html.twig' %}
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+    <div id="myAlert" class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>{{ flashMessage }}</strong> 
+    </div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('warning') %}
+    <div id="myAlert" class="alert alert-danger alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>{{ flashMessage }}</strong> 
+    </div>
+{% endfor %}
+
+<section id="seccionGestionSolicitud">
+     <h2>Consultar solicitudes de acceso</h2>
+    <hr>
+    <form action="{{ path('solicitud_seccion') }}" method="post" >
+
+        <span>Secciones:</span> 
+        <select id="form_seccion" name="form_seccion" class="margen" title="Secciones" required> 
+          {{ render(controller('ProfesorBundle:Seccion:renderSeccionByProf')) }}
+        </select><br><br>
+        <button style="margin-left: 18em; margin-top: 4em" id="boton" type="submit" class="btn btn-success" >Consultar</button>
+       
+    </form>
+          
+</section>
+
+
+
+{% endblock %} 
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+<script type="text/javascript">
+
+{% endblock %}
+
+
+
+

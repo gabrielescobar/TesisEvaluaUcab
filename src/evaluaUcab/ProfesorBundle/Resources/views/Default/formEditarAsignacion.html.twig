@@ -1,0 +1,157 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = true %}
+{% block title %}Editar Asignación{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioProfesor.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/portafolioProfesor.css')}}" rel="stylesheet" type="text/css"/>
+
+{% endblock %}
+
+
+{% block body %}
+
+{% include '::header.html.twig' %}
+{% include 'ProfesorBundle:Default:navProfesor.html.twig' %}
+{% include 'ProfesorBundle:Default:menuPortafolioProfesor.html.twig' %}
+
+{% for flashMessage in app.session.flashbag.get('warning') %}
+<div id="myAlert" class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+    <strong>{{ flashMessage }}</strong> 
+</div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+<div id="myAlert" class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+    <strong>{{ flashMessage }}</strong> 
+</div>
+{% endfor %}
+
+
+<section id="contenidoPortafolio">
+
+
+    <h2>Editar </h2>
+    <hr style="margin-left: -2em; width: 67.8em; border: 0; height: 5px; box-shadow: inset 0 12px 12px -12px #1ea3e1;">
+
+    <form action="{{ path('editar_asignacion',{'idAsignacion':asignacion.id}) }}" method="post" >
+
+        <span class="span">Fecha de cierre:</span> 
+        <input id="form_fechaCierre" style="margin-top: 1.5em; height: 2em" name="form_fechaCierre" 
+         type="datetime-local" min="{{date()|date("Y-m-d")}}T00:00" 
+         max="{{ portafolio.fechaCierre|date_modify("-1 day")|date("Y-m-d")}}T00:00" 
+         value="{{asignacion.fechaCierre|date('Y-m-d')}}T{{asignacion.fechaCierre|date('H:i')}}"
+         class="fecha" required > <br>
+        <br><span class="span">Estatus:</span>
+         {%if asignacion.estatus == 0%}
+           <input type="radio" name="form_estatus" value="1">Activada
+           <input type="radio" name="form_estatus" value="0" checked>Desactivada
+         {%else%}
+           <input type="radio" name="form_estatus" value="1" checked>Activada
+           <input type="radio" name="form_estatus" value="0" >Desactivada 
+         {%endif%}
+       <br>
+        <br><span class="span">Herramienta de Evaluación:</span>
+        
+        <select  id="form_herramienta" name="form_herramienta" tittle="Herramienta de Evaluación" >  
+           <option value="" diabled selected>Seleccione </option>
+           {%if asignacion.rubrica == null%}
+           <option value="lista" selected>Lista de cotejo </option>
+           <option value="rubrica">Rúbrica </option> 
+           {%else%}
+           <option value="lista">Lista de cotejo </option>
+           <option value="rubrica" selected>Rúbrica </option> 
+           {%endif%}
+        </select>
+        <br><br><span>Lista/Rúbrica: </span>
+        <select id="form_eleccion" name="form_eleccion" tittle="Lista de Cotejo/Rúbica" >  
+            <option value="" diabled selected>Seleccione </option>
+        </select><br><br>
+
+       <button style="margin-left: 5em; margin-top:2em" type="submit" class="btn btn-success" >Guardar</button>
+
+    </form>
+
+    <form method="link" action="{{ path('asignaciones',{'idPortafolio':portafolio.id}) }}" > 
+          <button style="margin-left: 13em; margin-top:-4em" type="submit" class="btn btn-info" >Regresar</button>
+    </form>
+   
+
+</section>
+
+
+
+
+
+{% endblock %} 
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+<script src="{{ asset('bundles/profesor/js/importarExamen.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+     var data = {
+             opcion: document.getElementById("form_herramienta").value
+             
+           };
+           var $selector = $('#form_eleccion');
+           console.log(data);
+            $.ajax({
+             type: 'post',
+             url: '{{ path("get_listas_rubricas") }}',   
+             dataType: 'json',
+             data: data,
+             success: function(data) {
+             console.log(data);        
+                    
+              for (var i in data) {
+                $selector.append('<option value="' + data[i].id + '">'+data[i].titulo+  '</option>');
+             }
+           },
+             error: function (data2){
+               console.log(data2);
+             }
+         });
+});
+          
+
+    $("#form_herramienta").change(function() {
+         console.log("entre");
+          var $selector = $('#form_eleccion');
+          $selector.empty();
+            var data = {
+             opcion: $(this).val()
+           };
+           console.log(data);
+            $.ajax({
+             type: 'post',
+             url: '{{ path("get_listas_rubricas") }}',   
+             dataType: 'json',
+             data: data,
+             success: function(data) {
+             console.log(data);        
+                    
+              for (var i in data) {
+                $selector.append('<option value="' + data[i].id + '">'+data[i].titulo+  '</option>');
+             }
+           }
+         });
+       });
+
+    </script>
+{% endblock %}
+
+
+
+

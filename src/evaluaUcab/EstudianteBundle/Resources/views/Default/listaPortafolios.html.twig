@@ -1,0 +1,13 @@
+{# empty Twig template #}
+{# Traer la lista de portafolios del estudiante#}
+ <ul id="portafolios">
+{% for es in estudianteSeccion %}
+{# Lógica: se reciben todas las secciones asignadas del estusiante, y se pregunta si la seccion tiene portafolio creado #}
+  {% if  es.seccion.portafolio is not null %}
+  <li><a href="{{ path('ver_portafolio_estudiante', { 'id': es.seccion.id }) }}">
+       {{es.seccion.materia.nombre}} - {{es.seccion.codigo}} </a></li>
+  {%endif%}
+{% endfor %}
+ 
+ </ul>
+

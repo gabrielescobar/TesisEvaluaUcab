@@ -1,0 +1,52 @@
+/* 
+    Document   : diarios
+    Created on : 10-sep-2014, 16:22:03
+    Author     : Legna Filloy
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+@font-face {
+    font-family: 'DKCrayon';
+    src: url('../fonts/DKCrayonCrumble.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h2{
+    font-family: "DKCrayon"; 
+    margin-left: 1.5em;
+    margin-top: 1em;
+    font-weight: bold;
+
+}
+#bCrearDiario{
+    margin-top: 2em;
+    
+}
+#seccionDiarios{  /*recuadro*/
+    /*border: 0.2em solid #09ABF2;
+   background: white;
+    width: 65em;
+    height: 35em;
+    border-radius: 0.3em;
+    border:#969896 0.2em solid;
+    margin-left: 14em;
+    margin-top: -2.3em;*/
+
+}
+
+#listaDiarios{
+    list-style: none;
+    list-style-type: none;
+}
+#pagMaterias{
+    margin-left: 30em;
+}
+
+
+
+/*#seccionDiarios, #bCrearDiario{
+    display: inline-block;
+    vertical-align: top;
+}*/

@@ -1,0 +1,87 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = true %}
+{% block title %}Editar Pregunta{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/examenes.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioProfesor.css') }}" rel="stylesheet" type="text/css" />
+
+
+{% endblock %}
+
+{% block body %}
+
+{% include '::header.html.twig' %}
+{% include 'ProfesorBundle:Default:navProfesor.html.twig' %}
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+<div id="myAlert" class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+    <strong>{{ flashMessage }}</strong> 
+</div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('warning') %}
+<div id="myAlert" class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+    <strong>{{ flashMessage }}</strong> 
+</div>
+{% endfor %}
+
+<section id="recuadroEditarPreguntas"> 
+    <form action="{{ path('update_pregunta', {'idPregunta': pregunta.id })}}" method="post" >
+         <h2>Editar Pregunta</h2>
+         <hr>
+        <span style="margin-left: -0.1em">Enunciado </span> 
+       {{ form_widget(formulario.titulo)}}
+       {{ form_rest(formulario) }}
+        
+       {%if(pregunta.tipo == 'simple') %}
+        <br><span >Tipo: Selección Simple </span>
+         <input style="width: 5em" id="form_puntaje" type="hidden"  value="{{pregunta.calificacion}}" name="form_puntaje" > </input><br>
+
+       {%elseif (pregunta.tipo == 'multiple')%}
+       <br><span>Tipo: Selección Múltiple </span>
+       <input style="width: 5em" id="form_puntaje" type="hidden"  value="{{pregunta.calificacion}}" name="form_puntaje" > </input><br>
+
+       {%else%}
+       <br><span>Tipo: Respuesta suministrada por el estudiante </span><br><br>
+       <span>Calificación:</span> 
+       <input style="width: 5em" id="form_puntaje" type="number" step="0.05" min="0.05" value="{{pregunta.calificacion}}" name="form_puntaje" > </input><br>
+
+      {%endif%}
+      
+        <button id="bEPregunta" type="submit" class="btn btn-success" >Modificar</button>
+ 
+    </form>
+
+    <form action="{{path('prev_editar_respuestas',{'idPregunta': pregunta.id})}}" method="post" >
+
+        <button id="bEResp" type="submit" class="btn btn-danger" >Editar Respuestas</button>
+
+    </form>
+        
+         <form action="{{path('prev_editar_preguntas',{'idExamen': pregunta.examen.id})}}" method="post" >
+
+        <button id="bEB" type="submit" class="btn btn-info" >Regresar</button>
+
+    </form>
+        
+</section>
+
+{% endblock %} 
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+
+
+{% endblock %}
+

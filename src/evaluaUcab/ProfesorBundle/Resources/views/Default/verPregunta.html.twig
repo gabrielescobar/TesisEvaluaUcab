@@ -1,0 +1,95 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = true %}
+{% block title %}Ver Pregunta{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/examenes.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioProfesor.css') }}" rel="stylesheet" type="text/css" />
+
+
+{% endblock %}
+
+{% block body %}
+
+{% include '::header.html.twig' %}
+{% include 'ProfesorBundle:Default:navProfesor.html.twig' %}
+
+
+<section id="recuadroVerPregunta"> 
+    <h2>Pregunta </h2>
+    <hr style=" margin-left: -2em;width: 59.7em;border: 0; height: 5px; box-shadow: inset 0 12px 12px -12px #1ea3e1;">
+  
+    <span id="titulo" > {{pregunta.titulo}}</span> 
+
+      {%if(pregunta.tipo == 'simple') %}
+    <span>Tipo: Selección Simple </span>
+      {%elseif (pregunta.tipo == 'multiple')%}
+    <span>Tipo: Selección Múltiple </span>
+      {%else%}
+    <br><span >Tipo: Respuesta suministrada por el estudiante, corrección a criterio del profesor </span><br>
+      {%endif%}
+
+    <br><span >Valor: ({{pregunta.calificacion}}pts) </span>
+
+     {% if (pregunta.tipo == 'simple') or (pregunta.tipo == 'multiple')  %}
+    <br><span>Respuesta(as):</span><br><br>
+    
+             {% for respuesta in pregunta.respuestas %}
+              {# ... #}
+            <li style=" text-decoration: none; list-style: none "><span style="visibility: hidden">{{respuesta.contenido}} </span> 
+                <div style="float:right">({{respuesta.puntaje}} pts)
+                   {%if respuesta.validacion == 1 %}
+                    <img title="Respuesta Correcta" id="logo" src="{{asset('bundles/application/images/correcto.png')}}"/>
+                   {%else%}
+                    <img title="Respuesta Incorrecta" id="logo" src="{{asset('bundles/application/images/incorrecto.png')}}"/>
+                   {%endif%}
+                    </div>
+             </li>
+                <br>
+             {% endfor %}
+
+              {%endif%}
+                  
+            <form method="link" action="{{ path('ver_examen',{'idExamen':pregunta.examen.id}) }}" > 
+                <button id="bBack2" type="submit" class="btn btn-info" >Regresar</button>
+            </form>
+        </section>
+
+
+
+{% endblock %} 
+
+
+
+{% block javascripts %}
+  <script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+  <script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+  <script> 
+
+    $(document).ready(function(){
+      var valor;
+       valor= $("#titulo").text();
+              $("#titulo").html(valor);
+         
+           $("#titulo").css("visibility", "visible");
+           $("#titulo").css("margin-left", "2em");
+      var t;
+       var valor;
+       $("#recuadroVerPregunta li span").each(function(){
+          valor= $(this).text();
+          $(this).html(valor);
+          $(this).css("visibility", "visible");
+          //alert(valor);
+           
+       });
+         
+});
+
+</script>
+
+{% endblock %}
+{# empty Twig template #}

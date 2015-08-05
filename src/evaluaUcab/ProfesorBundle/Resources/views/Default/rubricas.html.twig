@@ -1,0 +1,103 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = true %}
+{% block title %}Rúbricas{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/rubricas.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/alertCustomize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioProfesor.css') }}" rel="stylesheet" type="text/css" />
+
+
+{% endblock %}
+
+{% block body %}
+
+{% include '::header.html.twig' %}
+{% include 'ProfesorBundle:Default:navProfesor.html.twig' %}
+
+ <div id="dialog" style="visibility: hidden;  position: absolute; top:6.4em;  right: 4em;" class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>¡La rúbrica fue eliminada exitosamente!</strong> 
+    </div>
+
+ <div id="dialog2" style="visibility: hidden;  position: absolute; top:6.4em;  right: 4em;" class="alert alert-danger alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>¡La rúbrica ya está asociada a una asignación!</strong> 
+    </div>
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+    <div id="myAlert" class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>{{ flashMessage }}</strong> 
+    </div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('warning') %}
+    <div id="myAlert" class="alert alert-danger alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>{{ flashMessage }}</strong> 
+    </div>
+{% endfor %}
+    
+<button id="cRubrica" onclick="location.href='{{asset('rubricas/public_html/crear.html?id_profesor='~app.user.id~'') }}'" 
+  class="btn btn-danger" >Crear Rúbrica</button>
+
+<section id="recuadroRubricas"> 
+ <h2>Mis Rúbricas </h2>
+ <hr style="border: 0; height: 5px; box-shadow: inset 0 12px 12px -12px #1ea3e1;">
+        <ol>
+      {% for rubrica in pagination %}
+     {# ... #}
+     
+     <li style="margin-left: 3em;"> <a title="Ver" href="{{asset('rubricas/public_html/vista.html?id='~rubrica.id~'') }}" >{{rubrica.titulo}}  </a>
+     <a title="Eliminar" style="float:right; margin-right: 2em;"  href="{{asset('rubricas/public_html/borrarrubrica.php?id='~rubrica.id~'') }}" > <img id="logo" src="{{asset('bundles/application/images/trash.png')}}"/> </a>
+     <a title="Editar" style="float:right; " href="{{asset('rubricas/public_html/editar.html?id='~rubrica.id~'')}}" > <img id="logo" src="{{asset('bundles/application/images/edicionIcon.png')}}"/> </a>
+                      
+      </li>
+      
+     <hr style="margin-left: -2.8em">
+    
+     
+{% endfor %}
+     </ol>
+    <div id="pag" class="navigation">
+      {{ knp_pagination_render(pagination) }}
+    </div>  
+ 
+</section>
+
+{% endblock %} 
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+<script src="{{ asset('bundles/profesor/js/dialogo.js') }}"></script>
+<script src="{{ asset('bundles/profesor/js/examenFunctions.js') }}"></script>
+<script> 
+  function getURLParameter(name) {
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null
+}
+
+  if (getURLParameter('val') == '1'){
+       $("#dialog").css("visibility","visible");
+      
+  }else if (getURLParameter('val') == '0'){
+         $("#dialog2").css("visibility","visible");
+  }
+    
+    
+</script>
+
+{% endblock %}

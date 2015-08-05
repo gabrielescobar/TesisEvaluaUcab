@@ -1,0 +1,66 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = true %}
+{% block title %}Agregar Material{% endblock %}
+
+{% block stylesheets %}
+
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioProfesor.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/portafolioProfesor.css')}}" rel="stylesheet" type="text/css"/>
+<link href="{{ asset('bundles/profesor/css/alertCustomize.css') }}" rel="stylesheet" type="text/css" />
+
+{% endblock %}
+
+
+{% block body %}
+
+{% include '::header.html.twig' %}
+{% include 'ProfesorBundle:Default:navProfesor.html.twig' %}
+{% include 'ProfesorBundle:Default:menuPortafolioProfesor.html.twig' %}
+
+{% for flashMessage in app.session.flashbag.get('warning') %}
+<div id="myAlert" class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+    <strong>{{ flashMessage }}</strong> 
+</div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+<div id="myAlert" class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+    <strong>{{ flashMessage }}</strong> 
+</div>
+{% endfor %}
+
+
+<section id="contenidoPortafolio">
+
+    <form action="{{ path('add_material',{'idPortafolio':portafolio.id}) }}" onSubmit="return validarArchivo();"  method="post" {{form_enctype(formulario) }}>
+
+        <br><div  id="cargarFoto" name="div" class="fileUpload btn btn-danger">
+            <p id="selecArchivo">Seleccionar Archivo</p>
+            {{ form_widget(formulario.file, { 'attr': { 'class':'upload'} }) }}       
+        </div>
+         {{ form_errors(formulario.file) }}
+        <br>     
+        <input style="margin-top: 2em; margin-left: 3em" type="submit" value="Guardar" class="btn btn-info" />
+        {{ form_rest(formulario) }}
+    </form>
+
+</section>
+
+{% endblock %} 
+{% block javascripts %}
+     <script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+     <script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+
+{% endblock %}
+
+
+
+

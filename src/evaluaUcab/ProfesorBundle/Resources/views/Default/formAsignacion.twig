@@ -1,0 +1,71 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = true %}
+{% block title %}Crear Asignación{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/examenes.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioProfesor.css') }}" rel="stylesheet" type="text/css" />
+
+
+{% endblock %}
+
+{% block body %}
+
+{% include '::header.html.twig' %}
+{% include 'ProfesorBundle:Default:navProfesor.html.twig' %}
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+    <div id="myAlert" class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>{{ flashMessage }}</strong> 
+    </div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('warning') %}
+    <div class="alert alert-danger alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>{{ flashMessage }}</strong> 
+    </div>
+{% endfor %}
+
+<section id="recuadroCrearExamen"> 
+ <form action="{{ path('registrar_asignacionn') }}" method="post" >
+   <h2>Crear Asignación</h2>
+    <hr>
+        <span>Título: </span> 
+        <input id="form_titulo" name="form_titulo" class="titulo"> </input> <br><br>
+        <span>Tipo: </span> 
+        <select id="form_tipo" name="form_tipo" tittle="Tipo" required>  
+        </select>
+        <span>Descripción: </span>
+        <textarea id="form_descripcion" name="form_descripcion" class="area"> </textarea><br><br>     
+        <span class="span">Fecha de cierre:</span> 
+        <input id="form_fechaCierre" class="margen grosor2" value="" name="form_fechaCierre" type="date" min="{{ "now"|date("Y-m-d") }}" max="{{ portafolio.fechaCierre|date_modify("-1 day")|date("Y-m-d") }}" class="fecha" required > <br>
+        <span class="span">Hora de cierre:</span>  
+        <input id="form_horaCierre"  class="margen grosor" value="" name="form_horaCierre" type="time" required > <br>
+         
+      
+        <br>
+
+        <button id="bGuardarExamen" type="submit" class="btn btn-success" >Crear</button>
+       
+    </form>
+        
+</section>
+
+{% endblock %} 
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+
+
+{% endblock %}

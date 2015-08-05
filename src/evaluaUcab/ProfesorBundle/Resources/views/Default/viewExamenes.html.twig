@@ -1,0 +1,140 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = true %}
+{% block title %}View Examenes{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioProfesor.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/portafolioProfesor.css')}}" rel="stylesheet" type="text/css"/>
+<link href="{{ asset('bundles/profesor/css/alertCustomize.css') }}" rel="stylesheet" type="text/css" />
+
+{% endblock %}
+
+
+{% block body %}
+
+{% include '::header.html.twig' %}
+{% include 'ProfesorBundle:Default:navProfesor.html.twig' %}
+{% include 'ProfesorBundle:Default:menuPortafolioProfesor.html.twig' %}
+
+{% for flashMessage in app.session.flashbag.get('warning') %}
+<div id="myAlert" class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+    <strong>{{ flashMessage }}</strong> 
+</div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+<div id="myAlert" class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+    <strong>{{ flashMessage }}</strong> 
+</div>
+{% endfor %}
+
+ <div id="dialog" style="visibility: hidden;  position: absolute; top:6.4em;  right: 4em;" class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>¡Examen Eliminado del portafolio!</strong> 
+    </div>
+     
+       <!-- Modal -->
+                <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header" id="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Importar Examen</h4>
+                            </div>
+
+                            <div class="modal-body">      
+                              
+                              <form action="{{ path('importar_examen' ,{'idPortafolio':portafolio.id}) }}" method="post" >
+                               <br><span class="span">Examenes:</span> 
+                               <select id="form_examen" name="form_examen" tittle="Examenes" required>  
+                                   {{ render(controller('ProfesorBundle:Examen:renderExamenes')) }}
+                               
+                               </select> <br><br>
+                                <span class="span">Tipo:</span>
+                                <select id="form_tipo" name="form_tipo" tittle="Tipo" required>  
+                                    <option value="" diabled selected>Seleccione </option>
+                                      <option value="1">Grupal </option>
+                                      <option value="0">Individual </option>
+                               
+                               </select> <br><br>
+                                 <span>Porcentaje: </span>
+                                  <input id="form_porcentaje" type="number" style="width: 5em; height: 2em" step="0.050" min="0.050" name="form_porcentaje" required> </input>%<br>
+                               <span class="span">Fecha de cierre:</span> 
+                              <input id="form_fechaCierre" class="margen grosor2" name="form_fechaCierre" type="date" min="{{ "now"|date("Y-m-d") }}" max="{{ portafolio.fechaCierre|date_modify("-1 day")|date("Y-m-d") }}" class="fecha" required > <br>
+                              <span class="span">Hora de cierre:</span>  
+                              <input id="form_horaCierre"  class="margen grosor" name="form_horaCierre" type="time" required > <br>
+                               <span class="span">Duración:</span>  
+                              <input id="form_duracion" class="margen grosor" name="form_duracion" type="time" required > <br><br>
+                               <hr style="margin-left: -1em; width: 42.3em;">
+                              <button style="margin-left: 14em;" type="submit" class="btn btn-success" >Guardar</button>
+                         
+                              </form>
+                               
+                              <button style="margin-left: 20em; margin-top: -4em" type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                               
+                          </div>
+                        </div>
+                    </div>
+                </div>
+
+<section id="contenidoPortafolio">
+    
+<button style="margin-top: 2em;" class="btn btn-danger " data-toggle="modal" data-target="#myModal2">Importar Examen </button>
+
+    <h2>Examenes </h2>
+    <hr style="margin-left: -2em; width: 67.8em; border: 0; height: 5px; box-shadow: inset 0 12px 12px -12px #1ea3e1;">
+
+    <ol>  
+  {% for examenEnPortafolio in portafolio.examenes %}
+{# ... #} {{examenEnPortafolio.id}}
+    <li style="margin-left: 3em;"> <a title="Ver" href="{{path('detalle_examen_portafolio',{'idExamenPortafolio':examenEnPortafolio.id})}}" >
+     {{ examenEnPortafolio.examen.titulo}} ({{ examenEnPortafolio.examen.puntaje}}pts)
+            {%if examenEnPortafolio.tipo == 0%}
+                 <img title="Examen Individual" id="logo" src="{{asset('bundles/application/images/individual.png')}}"/>
+              {%else%}
+                 <img title="Examen Grupal" id="logo" src="{{asset('bundles/application/images/mixto.png')}}"/>
+              {%endif%}    
+     </a>
+     <a title="Eliminar" style="float:right; margin-right: 2em;"  onclick="alertDGC('Eliminar examen del portafolio','prompt','deleteExamenPortafolio',{{examenEnPortafolio.id}},{{portafolio.id}},0)" > <img id="logo" src="{{asset('bundles/application/images/trash.png')}}"/></a>
+     <a title="Editar" style="float:right; " href="{{path('form_editar_examen_portafolio',{'idExamenPortafolio':examenEnPortafolio.id})}}" ><img id="logo" src="{{asset('bundles/application/images/edicionIcon.png')}}"/></a></li>
+     
+    <hr style="margin-left: -2.8em">
+   {% endfor %}
+ </ol>
+
+
+
+
+
+</section>
+
+
+
+
+
+{% endblock %} 
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+<script src="{{ asset('bundles/profesor/js/dialogo.js') }}"></script>
+<script src="{{ asset('bundles/profesor/js/importarExamen.js') }}"></script>
+<script src="{{ asset('bundles/profesor/js/portafolioFunctions.js') }}"></script>
+{% endblock %}
+
+
+
+

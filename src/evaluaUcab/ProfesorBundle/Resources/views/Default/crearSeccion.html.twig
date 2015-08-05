@@ -1,0 +1,54 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = true %}
+{% block title %}Crear Sección{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioProfesor.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/crearSeccion.css') }}" rel="stylesheet" type="text/css" />
+
+{% endblock %}
+
+
+{% block body %}
+
+{% include '::header.html.twig' %}
+{% include 'ProfesorBundle:Default:navProfesor.html.twig' %}
+
+<section id="seccionCrearSeccion">
+    <h2>Crear Sección</h2>
+    <hr>
+    <form action="{{ path('crear_seccion' ,{'id':app.user.id}) }}" method="post" >
+
+        <span> Materia:</span> {{ form_widget(formulario.materia, { 'attr': {'title':'Materia', 'class': 'listaMaterias'} }  ) }}
+       {{ form_errors(formulario.materia) }}  <br>
+       {{ form_widget(formulario.codigo, { 'attr': {'placeholder':'Código', 'title':'Código de la sección', 'class': 'texto'} }  ) }}
+       {{ form_errors(formulario.codigo) }}
+    
+        <br>     
+
+        <button id="boton" type="submit" class="btn btn-success" >Guardar</button>
+          {{ form_rest(formulario) }}
+    </form>
+
+
+</section>
+
+
+
+{% endblock %} 
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+
+{% endblock %}
+
+
+
+

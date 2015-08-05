@@ -1,0 +1,16 @@
+application:
+    resource: "@ApplicationBundle/Resources/config/routing.yml"
+    prefix:   / 
+
+estudiante:
+    resource: "@EstudianteBundle/Resources/config/routing.yml"
+    prefix:   /estudiante
+
+profesor:
+    resource: "@ProfesorBundle/Resources/config/routing.yml"
+    prefix:   /profesor
+    
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"  
+
+

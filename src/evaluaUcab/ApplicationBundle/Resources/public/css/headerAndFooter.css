@@ -1,0 +1,145 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*****************************************************HEADER****************************************************/
+
+body{
+    background: url('../images/fondoRaya.png');
+    background-repeat: repeat-y;
+    background-size: 100%;
+    height: 100%;
+}
+
+header
+{
+    height: 7em;
+    margin: 0.4em 0 3em 0.2em; /*separacion entre el logo y la barra*/
+    width: 100%;
+
+}
+a:link{
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: none;
+    cursor: pointer;
+}
+a:focus{
+    outline: none;
+}
+button:focus{
+    outline:none;
+}
+
+#foto{
+    display:inline-block; 
+    float: right;
+}
+
+
+.cerrarSesion{
+    background: url("../images/salir.png");
+    border: none;
+    height: 16px;
+    outline: none;
+    width: 16px;    
+}
+
+.ayuda{
+    background: url("../images/ayuda.png"); 
+    border: none;
+    height: 16px;
+    outline: none;
+    width: 16px;      
+}
+.editPerfil{
+    background: url("../images/editar.png"); 
+    border: none;
+    height: 16px;
+    outline: none;  
+    width: 16px;   
+}
+
+#topBar {
+    display: table;
+    list-style-type: none; 
+    overflow:hidden;
+    position:absolute;
+    right:  3em; /*trivial*/
+
+}
+
+#nombre{
+    background-color:#FFF;
+    color:#000;
+    font-family:'Comic Sans MS';
+    font-weight: bold;
+    font-size: 16px;
+    text-align:right;   
+}
+
+#logo{
+    margin-left: 1em;
+}
+
+#logo , #topBar{
+    display: inline-block;
+    vertical-align:top;
+}
+
+#imagen{
+    border-radius: 1.5em;
+
+}
+#botones{
+    float: right;
+    margin-top: 4.4em;
+    margin-right: -4.2em;   
+}
+
+#noClose{
+    margin-right: 2em;
+    font-size: 16px;
+}
+
+#yesClose{
+    margin-right: 16em;
+    font-size: 16px;
+}
+
+#nombre{
+    background: none;
+    display:inline-block; 
+    float: left; 
+    margin-top:1.3em;
+    white-space:nowrap; 
+
+}
+.spanCerrarSesion{
+    font-weight: bold;
+    font-size: 18px;
+    margin-left: 11.5em;
+    
+}
+
+/************************************************FIN HEADER*********************************************************/
+
+footer
+{
+    color: #000;
+    font-weight: bold;
+    font-family:'Comic Sans MS';
+    font-size: 18px;
+    margin-left: 24em;
+    margin-top: 2em;
+
+}
+
+/****************************************Utiles********************************************************************/
+
+#myAlert{
+    
+    position: absolute;
+    top:6.4em;
+    right: 4em;
+}

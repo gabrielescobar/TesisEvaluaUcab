@@ -1,0 +1,74 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = true %}
+{% block title %}Ver Exámen{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/examenes.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioProfesor.css') }}" rel="stylesheet" type="text/css" />
+
+
+{% endblock %}
+
+{% block body %}
+
+{% include '::header.html.twig' %}
+{% include 'ProfesorBundle:Default:navProfesor.html.twig' %}
+
+
+<section id="recuadroVerExamen"> 
+ <h2>Exámen </h2>
+ <hr style="border: 0; height: 5px; box-shadow: inset 0 12px 12px -12px #1ea3e1;">
+ <span class="marginSpan">Título: <pre style="width: 80%;  font-size: 16px; margin-left: 5.5em; margin-top: -2em; font-family: Comic Sans MS; background: none;border: none; resize: none;">{{examen.titulo}} </pre></span> 
+ <span class="marginSpan">Descripcion: </span> <pre style="width: 80%; font-size: 16px; margin-left: 8.2em; margin-top: -2em; font-family: Comic Sans MS; background: none;border: none; resize: none;">{{examen.descripcion}} </pre>
+ <span class="marginSpan"> Valor: {{examen.puntaje}}pts </span><br>
+ 
+ <br><span class="marginSpan">  Pregunta(as): </span>
+    
+    <br><br><ol id="pregunta">
+        <hr style="margin-left: -2.8em">
+      {% for pregunta in pagination %}
+    
+       <li style="margin-left:2em; visibility: hidden;"><a href="{{path('ver_pregunta',{'idPregunta':pregunta.id})}}">{{pregunta.titulo}} ({{ pregunta.calificacion }}pts) </a>      </li>  
+        
+       <hr style="margin-left: -2.8em">
+      {% endfor %}
+     </ol>
+     <div id="pagMaterias" class="navigation">
+        {{ knp_pagination_render(pagination) }}
+     </div>
+  <form method="link" action="{{ path('examenes') }}" > 
+   <button id="bBack" type="submit" class="btn btn-info" >Finalizar</button>
+ </form> 
+   
+</section>
+
+
+
+{% endblock %} 
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+<script> 
+
+    $(document).ready(function(){
+      var valor;
+       $("#pregunta li a").each(function(){
+          valor= $(this).text();
+          $(this).html(valor);
+          $(this).css("visibility","visible");
+          //alert(valor);
+           
+       });          
+});
+
+</script>
+
+
+{% endblock %}

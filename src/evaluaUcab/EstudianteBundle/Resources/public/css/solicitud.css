@@ -1,0 +1,53 @@
+/* 
+    Document   : solicitud
+    Created on : 27-oct-2014, 16:54:51
+    Author     : Legna Filloy
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+@font-face {
+    font-family: 'DKCrayon';
+    src: url('../fonts/DKCrayonCrumble.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h2{
+    font-family: "DKCrayon"; 
+    margin-left: 1.5em;
+    margin-top: 1em;
+    font-weight: bold;
+
+}
+#bCrearSolicitud{
+    margin-top: 3.4em;
+    margin-left: 4em;
+    
+}
+#seccionSolicitudes{  /*recuadro*/
+    /*border: 0.2em solid #09ABF2;*/
+   background: white;
+    width: 65em;
+    height: 35em;
+    border-radius: 0.3em;
+    border:#969896 0.2em solid;
+   margin-left: 16em;
+   margin-top: -2.4em;
+    
+}
+
+#listaSolicitudes{
+    list-style: none;
+    list-style-type: none;
+}
+#pagSolicitudes{
+    margin-left: 30em;
+}
+
+#seccionSolicitudes, #bCrearSolicitud{
+    display: inline-block;
+    vertical-align: top;
+}
+
+

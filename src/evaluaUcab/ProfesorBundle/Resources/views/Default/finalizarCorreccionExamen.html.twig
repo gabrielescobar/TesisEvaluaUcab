@@ -1,0 +1,88 @@
+{# empty Twig template #}
+
+{% extends '::base.html.twig'%}
+{% set isProfesor = true %}
+{% block title %}Finalizar Corrección{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioProfesor.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/portafolioProfesor.css')}}" rel="stylesheet" type="text/css"/>
+<link href="{{ asset('bundles/profesor/css/alertCustomize.css') }}" rel="stylesheet" type="text/css" />
+
+{% endblock %}
+
+
+{% block body %}
+
+{% include '::header.html.twig' %}
+{% include 'ProfesorBundle:Default:navProfesor.html.twig' %}
+{% include 'ProfesorBundle:Default:menuVerPortafolioEstudiante.html.twig' %}
+
+{% for flashMessage in app.session.flashbag.get('warning') %}
+<div id="myAlert" class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+    <strong>{{ flashMessage }}</strong> 
+</div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+<div id="myAlert" class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+    <strong>{{ flashMessage }}</strong> 
+</div>
+{% endfor %}
+
+    
+<section id="contenidoPortafolio">
+    <h2>Calificar</h2>
+    <hr style="border: 0; height: 5px; box-shadow: inset 0 12px 12px -12px #1ea3e1;">
+     
+   
+       {{ form_widget(formulario.respuesta)}}
+       {{ form_rest(formulario) }}
+       <form method="link" action="{{ path('form_calificar_escrito',{'idHistoricoExamen':idHistoricoExamen, 
+                  'idExamenPortafolio':idExamenPortafolio,'idPregunta':pregunta.id,
+                  'idEstudianteSeccion':idEstudianteSeccion}) }}" > 
+               <button id="" style="margin-top: 2em; margin-left: 32em" type="submit" class="btn btn-danger" >Calificar</button>
+    </form>
+    
+       <form method="link" action="{{ path('form_editar_calificar_escrito',{'idHistoricoExamen':idHistoricoExamen, 
+                  'idExamenPortafolio':idExamenPortafolio,'idPregunta':pregunta.id,
+                  'idEstudianteSeccion':idEstudianteSeccion}) }}" > 
+               <button id="" style="margin-top: 2em; margin-left: 32em" type="submit" class="btn btn-success" >Editar Calificar</button>
+    </form>
+         
+         <form method="link" action="{{ path('preguntas_a_calificar',{'idHistoricoExamen':idHistoricoExamen, 
+                  'idExamenPortafolio':idExamenPortafolio,
+                  'idEstudianteSeccion':idEstudianteSeccion}) }}" > 
+               <button id="" style="margin-top: -4em; margin-left: 23em" type="submit" class="btn btn-info" >Regresar</button>
+    </form>   
+    
+
+</section>
+
+{% endblock %} 
+
+
+
+{% block javascripts %}
+
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+<script src="{{ asset('bundles/profesor/js/dialogo.js') }}"></script>
+<script src="{{ asset('bundles/profesor/js/grupoFunctions.js') }}"></script>
+
+
+
+{% endblock %}
+
+
+
+

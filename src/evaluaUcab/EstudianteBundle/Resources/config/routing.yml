@@ -1,0 +1,99 @@
+#Routing EstudianteBundle
+
+#id -> id del portafolio, segun el id cargará la vista con los datos correspondientes#
+ver_portafolio_estudiante:
+    pattern:  /portafolio/{id}
+    defaults: { _controller: EstudianteBundle:Portafolio:verPortafolio }
+    
+diarios:
+    path: /diarios/{idPortafolio}
+    defaults: {_controller: EstudianteBundle:Diario:diarios}
+    options:
+        expose: true 
+        
+crear_diario:
+    path: /crearDiario/{idPortafolio}
+    defaults: {_controller: EstudianteBundle:Diario:crearDiario}
+
+eliminar_diario:
+    path: /eliminarDiario/{idDiario}
+    defaults: {_controller: EstudianteBundle:Diario:eliminarDiario}
+    options:
+        expose: true 
+        
+editar_diario:
+    path: /editarDiario/{idPortafolio}/{idDiario}
+    defaults: {_controller: EstudianteBundle:Diario:editDiario}
+
+diario_update:
+    pattern:  /updateDiario/{idPortafolio}/{idDiario}
+    defaults: { _controller: EstudianteBundle:Diario:updateDiario }
+         
+ver_diario:
+    path: /diario/{id}
+    defaults: {_controller: EstudianteBundle:Diario:verDiario}
+
+estudiante_edit:
+    path:  /edit/{id}
+    defaults: { _controller: EstudianteBundle:Default:editPerfil }
+
+estudiante_update:
+    path:  /update/{id}
+    defaults: { _controller: EstudianteBundle:Default:updatePerfil }
+    requirements: { _method: post }
+ 
+obtener_examenes:
+    path: /obtenerExamenes/{idSeccion}
+    defaults: {_controller: EstudianteBundle:Portafolio:obtenerExamenes}
+    
+ver_examen_estudiante:
+    path: /verExamenEstudiante/{idExamenPortafolio}
+    defaults: {_controller: EstudianteBundle:Portafolio:verExamenEstudiante}
+
+corregir_examen:
+    path: /corregirExamen/{idExamenPortafolio}
+    defaults: {_controller: ProfesorBundle:Examen:corregirExamen}
+    options:
+        expose: true
+
+calendario_estudiante:
+    path: /calendario
+    defaults: {_controller: EstudianteBundle:Calendar:calendario}
+
+mapas_mentales:
+    path: /mapasMentales/{idEstudiante}
+    defaults: {_controller: EstudianteBundle:MapaMental:ver}
+    options:
+        expose: true
+
+borrar_mapamental_outside:
+    path: /borrarMapaMentalOutside/{idMapa}
+    defaults: {_controller: EstudianteBundle:MapaMental:borrarMapaMentalOutside}
+    options:
+        expose: true
+
+solicitud:
+    path: /solicitud
+    defaults: {_controller: EstudianteBundle:Solicitud:ver}
+
+presentacion:
+    path: /presentacion
+    defaults: {_controller: EstudianteBundle:Presentacion:ver}
+
+solicitar_acceso:
+    path: /solicitarAcceso
+    defaults: {_controller: EstudianteBundle:Solicitud:solicitarAcceso}
+    
+registrar_acceso:
+    path: /registrarAcceso
+    defaults: {_controller: EstudianteBundle:Solicitud:registrarAcceso}
+ 
+obtener_asignaciones:
+    path: /asignacionesPorPortafolio/{idPortafolio}
+    defaults: {_controller: EstudianteBundle:Portafolio:asignacionesPorPortafolio}
+    
+ver_calificaciones_estudiante:
+    path: /misCalificaciones/{idPortafolio}
+    defaults: {_controller: EstudianteBundle:Portafolio:misCalificaciones}
+
+

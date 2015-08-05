@@ -1,0 +1,107 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = true %}
+{% block title %}Vista Previa Preguntas{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/examenes.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/alertCustomize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioProfesor.css') }}" rel="stylesheet" type="text/css" />
+
+
+{% endblock %}
+
+{% block body %}
+
+{% include '::header.html.twig' %}
+{% include 'ProfesorBundle:Default:navProfesor.html.twig' %}
+
+<div id="dialog" style="visibility: hidden;  position: absolute; top:6.4em;  right: 4em;" class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>¡Pregunta Eliminada!</strong> 
+    </div>
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+<div id="myAlert" class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+    <strong>{{ flashMessage }}</strong> 
+</div>
+{% endfor %}
+
+<form method="link" action=" {{path('preguntas', {'id': examen.id})}} " > 
+    <button id ="bAddPregunta" type="submit" class="btn btn-danger" >Añadir Pregunta </button>
+</form>
+
+
+<section id="recuadroPrevPreguntas"> 
+ <h2>Preguntas creadas</h2>
+ <hr style="border: 0; height: 5px; box-shadow: inset 0 12px 12px -12px #1ea3e1;">
+ 
+ <span class="marginSpan">Examen:  <pre style="width: 80%; font-size: 16px; margin-left: 6em; margin-top: -2em; font-family: Comic Sans MS; background: none;border: none; resize: none;"> {{examen.titulo}} ({{examen.puntaje}}pts) </pre>
+  </span>
+ <span class="marginSpan">Pregunta(as): </span> <br><br>
+   <hr >
+  {% for pregunta in pagination %}
+{# ... #}
+   <li style="margin-left: 3em; list-style: none"><a href="{{path('ver_pregunta',{'idPregunta':pregunta.id})}}"><span style="visibility: hidden;">{{pregunta.titulo}}</span> </a>
+     <p style="visibility:hidden">({{pregunta.calificacion}}pts)  
+     <a title="Eliminar pregunta" style="float:right; margin-right: 2em;" onclick="alertDGC('Eliminar Pregunta','prompt','deletePregunta',{{examen.id}},{{pregunta.id}},0)" > <img id="logo" src="{{asset('bundles/application/images/trash.png')}}"/> </a>
+     <a title="Editar" style="float:right; " href="{{ path('editar_pregunta',{'idPregunta':pregunta.id}) }}" > <img id="logo" src="{{asset('bundles/application/images/edicionIcon.png')}}"/> </a>
+     </p>                                                                               
+    </li>
+    <hr>
+   {% endfor %}
+ 
+    <div id="pag"  class="navigation">
+       {{ knp_pagination_render(pagination) }}
+   </div>
+    
+    <form method="link" action=" {{path('examenes')}} " > 
+    <button id="bFinP" type="submit" class="btn btn-info" >Finalizar</button>
+</form>
+</section>
+
+
+
+
+
+
+{% endblock %} 
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+<script src="{{ asset('bundles/profesor/js/dialogo.js') }}"></script>
+<script src="{{ asset('bundles/profesor/js/preguntaFunctions.js') }}"></script>
+<script> 
+
+    $(document).ready(function(){
+      var valor;
+       $("#recuadroPrevPreguntas li span").each(function(){
+          valor= $(this).text();
+          $(this).html(valor);
+          $(this).css("visibility", "visible");
+          //alert(valor);
+           
+       });  
+       
+       $("#recuadroPrevPreguntas li p").each(function(){
+         $(this).css("visibility", "visible");
+          //alert(valor);
+           
+       });  
+});
+
+</script>
+
+{% endblock %}
+

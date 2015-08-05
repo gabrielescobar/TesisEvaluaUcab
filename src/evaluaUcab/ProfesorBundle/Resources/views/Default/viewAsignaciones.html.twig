@@ -1,0 +1,252 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = true %}
+{% block title %}View Asignaciones{% endblock %}
+
+{% block stylesheets %}
+
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioProfesor.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/portafolioProfesor.css')}}" rel="stylesheet" type="text/css"/>
+<link href="{{ asset('bundles/profesor/css/alertCustomize.css') }}" rel="stylesheet" type="text/css" />
+
+{% endblock %}
+
+
+{% block body %}
+
+{% include '::header.html.twig' %}
+{% include 'ProfesorBundle:Default:navProfesor.html.twig' %}
+{% include 'ProfesorBundle:Default:menuPortafolioProfesor.html.twig' %}
+
+{% for flashMessage in app.session.flashbag.get('warning') %}
+<div id="myAlert" class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+    <strong>{{ flashMessage }}</strong> 
+</div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+<div id="myAlert" class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+    <strong>{{ flashMessage }}</strong> 
+</div>
+{% endfor %}
+
+<div id="dialog" style="visibility: hidden;  position: absolute; top:6.4em;  right: 4em;" class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+    <strong>¡Asignacion Eliminada del portafolio!</strong> 
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" id="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Crear Asignación</h4>
+            </div>
+
+            <div class="modal-body">      
+
+                <form action="{{ path('registrar_asignacion' ,{'idPortafolio':portafolio.id}) }}" method="post" >
+
+                    <span>Título: </span> 
+                    <input id="form_titulo" name="form_titulo" style="width: 20em;" required> </input> <br><br>
+                    <span>Descripción: </span>
+                    <textarea id="form_descripcion" name="form_descripcion" style="width: 16.5em; height: 7em; resize: none"> </textarea><br>
+
+                    <br><span class="span">Tipo de asignación:</span>
+                    <select id="form_tipo" name="form_tipo" tittle="Tipo" required>  
+                        <option value="" diabled selected>Seleccione </option>
+                        <option value="autoevaluacion">Autoevluación </option>
+                        <option value="coevaluacion">Coevaluación </option>
+                        <option value="mapamental">Mapa mental </option>
+                        <option value="presentacion">Presentación </option>  
+                    </select><br><br>
+                    <span class="span">Estatus:</span>
+                    <input type="radio" name="form_estatus" value="1" required>Activada
+                    <input type="radio" name="form_estatus" value="0"required>Desactivada
+                    <br><br>
+                    <span class="span">Modo de Presentación:</span>
+                    <select id="form_presentacion" name="form_presentacion" tittle="Modo de Presentación" required>  
+                        <option value="" diabled selected>Seleccione </option>
+                        <option value="1">Grupal </option>
+                        <option value="0">Individual </option> 
+                    </select><br><br>
+                    <span class="span">Porcentaje:</span>
+                    <input id="form_porcentaje" type="number" style="width: 5em; height: 2em" step="0.050" min="0.050" name="form_porcentaje" required> </input>%<br>
+
+                    <br><span class="span">Herramienta de Evaluación:</span>
+                    <select  id="form_herramienta" name="form_herramienta" tittle="Herramienta de Evaluación" required>  
+                        <option value="" diabled selected>Seleccione </option>
+                        <option value="lista">Lista de cotejo </option>
+                        <option value="rubrica">Rúbrica </option> 
+                    </select>
+                    <br><br><span>Lista/Rúbrica: </span>
+                    <select id="form_eleccion" name="form_eleccion" tittle="Lista de Cotejo/Rúbica" required>  
+                        <option value="" diabled selected>Seleccione </option>
+
+                    </select><br>
+
+                    <span class="span">Fecha de cierre:</span> 
+                    <input id="form_fechaCierre" style="margin-top: 1.5em; height: 2em" name="form_fechaCierre" type="datetime-local" min="{{date()|date("Y-m-d")}}T00:00" max="{{ portafolio.fechaCierre|date_modify("-1 day")|date("Y-m-d")}}T00:00" class="fecha" required > <br>
+                   <hr style="margin-left: -1em; width: 42.3em;">
+                    <button style="margin-left: 14em;" type="submit" class="btn btn-success" >Guardar</button>
+
+                </form>
+
+                <button style="margin-left: 20em; margin-top: -4em;" type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<section id="contenidoPortafolio">
+
+    <button style="margin-top: 2em;" class="btn btn-danger " data-toggle="modal" data-target="#myModal2">Crear Asignación </button>
+
+    <h2>Asignaciones </h2>
+    <hr style="margin-left: -2em; width: 67.8em; border: 0; height: 5px; box-shadow: inset 0 12px 12px -12px #1ea3e1;">
+
+    <div role="tabpanel" style="width: 67.7em; margin-left: -2em">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#autoevaluacion" aria-controls="autoevaluacion" role="tab" data-toggle="tab">Autoevaluaciones</a></li>
+            <li role="presentation"><a href="#coevaluacion" aria-controls="coevaluacion" role="tab" data-toggle="tab">Coevaluaciones</a></li>
+            <li role="presentation" ><a href="#mapasmentales" aria-controls="mapasmentales" role="tab" data-toggle="tab">Mapas Mentales</a></li>
+            <li role="presentation"><a href="#presentaciones" aria-controls="presentaciones" role="tab" data-toggle="tab">Presentaciones</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane" id="mapasmentales" style="padding: 1em">
+             {#Asignacion individual 0#}  {#Asignacion grupal 1#}
+           <ol>  
+           {% for mapaMental in mapasMentales %}
+            <li style="margin-left: 3em;"> <a title="Ver" 
+                href="{{path('ver_asignacion',{'idAsignacion':mapaMental.id})}}" >{{mapaMental.titulo}}</a>
+                {%if mapaMental.modoPresentacion == 0%}
+                   <img title="Asignación Individual" id="logo" 
+                     src="{{asset('bundles/application/images/individual.png')}}"/>
+                {%else%}
+                  <img title="Asignación Grupal" id="logo" 
+                    src="{{asset('bundles/application/images/mixto.png')}}"/>
+               {%endif%} 
+           <a title="Eliminar" style="float:right; margin-right: 2em;" onclick="alertDGC('Eliminar asignacion del portafolio', 'prompt', 'deleteAsignacion',{{portafolio.id}},{{mapaMental.id}}, 0);" > <img id="logo" src="{{asset('bundles/application/images/trash.png')}}"/></a>
+           <a title="Editar"   style="float:right;" href="{{path('form_editar_asignacion',{'idAsignacion':mapaMental.id})}}" ><img id="logo" src="{{asset('bundles/application/images/edicionIcon.png')}}"/> </a>
+           <p style="float:right">Fecha de cierre:
+                         {{mapaMental.fechaCierre|date('d/m/Y H:i', timezone="America/Caracas") }}</p>
+                   
+           <hr style="margin-left: -2.8em">
+           
+          {% endfor %}
+       </ol>
+     </div>
+      <div role="tabpanel" class="tab-pane" id="presentaciones" style="padding: 1em">
+         <ol>  
+           {% for presentacion in presentaciones %}
+             <li style="margin-left: 3em;"> 
+             <a title="Ver" href="{{path('ver_asignacion',{'idAsignacion':presentacion.id})}}" >{{presentacion.titulo}}</a>
+                {%if presentacion.modoPresentacion == 0%}
+                    <img title="Asignación Individual" id="logo" 
+                     src="{{asset('bundles/application/images/individual.png')}}"/>
+                {%else%}
+                     <img title="Asignación Grupal" id="logo" 
+                     src="{{asset('bundles/application/images/mixto.png')}}"/>
+                {%endif%} 
+                   <a title="Eliminar" style="float:right; margin-right: 2em;"  onclick="alertDGC('Eliminar asignacion del portafolio', 'prompt', 'deleteAsignacion',{{portafolio.id}},{{presentacion.id}}, 0);" > <img id="logo" src="{{asset('bundles/application/images/trash.png')}}"/></a>
+                   <a title="Editar"   style="float:right;  " href="{{path('form_editar_asignacion',{'idAsignacion':presentacion.id})}}" > <img id="logo" src="{{asset('bundles/application/images/edicionIcon.png')}}"/> </a>
+                   <p style="float:right">Fecha de cierre:
+                         {{presentacion.fechaCierre|date('d/m/Y H:i', timezone="America/Caracas") }}</p>    
+                   <hr style="margin-left: -2.8em">
+           {% endfor %}
+         </ol>
+     </div>
+      <div role="tabpanel" class="tab-pane active" id="autoevaluacion" style="padding: 1em">
+           <ol>  
+            {% for autoevaluacion in autoevaluaciones %}
+               <li style="margin-left: 3em;"> <a title="Ver" href="{{path('ver_asignacion',{'idAsignacion':autoevaluacion.id})}}" >{{autoevaluacion.titulo}}</a>
+                 {%if autoevaluacion.modoPresentacion == 0%}
+                     <img title="Asignación Individual" id="logo" 
+                      src="{{asset('bundles/application/images/individual.png')}}"/>
+                 {%else%}
+                     <img title="Asignación Grupal" id="logo" 
+                      src="{{asset('bundles/application/images/mixto.png')}}"/>
+                 {%endif%} 
+                   <a title="Eliminar" style="float:right; margin-right: 2em;"  onclick="alertDGC('Eliminar asignacion del portafolio', 'prompt', 'deleteAsignacion',{{portafolio.id}},{{autoevaluacion.id}}, 0);" > <img id="logo" src="{{asset('bundles/application/images/trash.png')}}"/></a>
+                   <a title="Editar"   style="float:right;  " href="{{path('form_editar_asignacion',{'idAsignacion':autoevaluacion.id})}}" > <img id="logo" src="{{asset('bundles/application/images/edicionIcon.png')}}"/> </a>
+                  <p style="float:right">Fecha de cierre:
+                         {{autoevaluacion.fechaCierre|date('d/m/Y H:i', timezone="America/Caracas") }}</p>
+                   <hr style="margin-left: -2.8em">
+           {% endfor %}
+           </ol>
+       </div>
+       
+      <div role="tabpanel" class="tab-pane" id="coevaluacion" style="padding: 1em">
+          <ol>  
+             {% for coevaluacion in coevaluaciones %}
+                <li style="margin-left: 3em;"> <a title="Ver" href="{{path('ver_asignacion',{'idAsignacion':coevaluacion.id})}}" >{{coevaluacion.titulo}}</a>
+               {%if coevaluacion.modoPresentacion == 0%}
+                  <img title="Asignación Individual" id="logo" 
+                  src="{{asset('bundles/application/images/individual.png')}}"/>
+               {%else%}
+                  <img title="Asignación Grupal" id="logo" 
+                  src="{{asset('bundles/application/images/mixto.png')}}"/>
+               {%endif%} 
+                 <a title="Eliminar" style="float:right; margin-right: 2em;"  onclick="alertDGC('Eliminar asignacion del portafolio', 'prompt', 'deleteAsignacion',{{portafolio.id}},{{coevaluacion.id}}, 0);" > <img id="logo" src="{{asset('bundles/application/images/trash.png')}}"/></a>
+                 <a title="Editar"   style="float:right;  " href="{{path('form_editar_asignacion',{'idAsignacion':coevaluacion.id})}}" > <img id="logo" src="{{asset('bundles/application/images/edicionIcon.png')}}"/> </a>
+                 <p style="float:right">Fecha de cierre:
+                         {{coevaluacion.fechaCierre|date('d/m/Y H:i', timezone="America/Caracas") }}</p>
+                   <hr style="margin-left: -2.8em">
+            {% endfor %}
+           </ol>
+      </div>
+   </div>
+ </div>
+
+</section>
+
+{% endblock %} 
+{% block javascripts %}
+     <script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+     <script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+     <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+     <script src="{{ asset('bundles/profesor/js/dialogo.js') }}"></script>
+     <script src="{{ asset('bundles/profesor/js/asignacionFunctions.js') }}"></script>
+     <script type="text/javascript">
+          $("#form_herramienta").change(function() {
+                console.log("entre");
+                var $selector = $('#form_eleccion');
+                   $selector.empty();
+                    var data = {
+                         opcion: $(this).val()
+                      };
+                        console.log(data);
+                        $.ajax({
+                          type: 'post',
+                          url: '{{ path("get_listas_rubricas") }}',
+                          dataType: 'json',
+                          data: data,
+                           success: function(data) {
+                              console.log(data);
+                                for (var i in data) {
+                                  $selector.append('<option value="' + data[i].id + '">' + data[i].titulo + '</option>');
+                                 }
+                              }
+                            });
+                         });
+     </script>
+{% endblock %}
+
+
+
+

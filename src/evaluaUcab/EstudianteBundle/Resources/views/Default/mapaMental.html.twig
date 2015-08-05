@@ -1,0 +1,39 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = false %}
+{% block title %}Mapa Mental{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/mapaMental.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioEstudiante.css') }}" rel="stylesheet" type="text/css" />
+
+{% endblock %}
+
+{% block body %}
+
+
+{% include '::header.html.twig' %}
+{% include 'EstudianteBundle:Default:navEstudiante.html.twig' %}
+
+<h2>Mapa Mental </h2>
+<section style="margin-left: 6em; margin-top: 1.6em; " id="seccionDiarios">
+   <iframe style="border:none; width: 78em; height: 45em; " src="http://localhost/MapaMental/"></iframe>  
+
+
+</section>
+
+{% endblock %} 
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+{% endblock %}
+
+
+
+

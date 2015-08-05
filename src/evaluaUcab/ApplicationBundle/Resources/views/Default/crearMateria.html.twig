@@ -1,0 +1,52 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set administrator = true %}
+{% block title %}Crear Materia{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolio.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/crearMateria.css') }}" rel="stylesheet" type="text/css" />
+
+{% endblock %}
+
+
+{% block body %}
+
+{% include '::headerAdmin.html.twig' %}
+{% include 'ApplicationBundle:Default:navAdmin.html.twig' %}
+
+<section id="seccionCrearMateria">
+      <h2>Crear Materia</h2>
+      <hr>
+  <form action="{{ path('crear_materia') }}" method="post" >
+       
+       {{ form_widget(formulario.nombre,{ 'attr': {'placeholder': 'Título', 'title':'Título del diario', 'class':'texto'}} ) }}
+       {{ form_errors(formulario.nombre) }}  <br>
+       {{ form_widget(formulario.descripcion, { 'attr': {'placeholder':'Breve descripción', 'title':'Descripción de la materia', 'class': 'textArea'} }  ) }}
+       {{ form_errors(formulario.descripcion) }}
+      <br>     
+     
+         <button id="boton" type="submit" class="btn btn-success" >Guardar</button>
+          {{ form_rest(formulario) }}
+    </form>
+      
+          
+</section>
+
+
+
+{% endblock %} 
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+{% endblock %}
+
+
+
+

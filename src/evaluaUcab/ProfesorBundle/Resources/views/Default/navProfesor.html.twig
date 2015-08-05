@@ -1,0 +1,13 @@
+{# empty Twig template #}
+
+<nav id="menu">
+   
+    <li style="background:#e4ba06"><a href="{{path('portafolios')}}">Portafolios</a></li>
+    <li style="background:#e4ba06"><a href="{{path('seccion', { 'idProfesor': app.user.id }) }}">Secciones</a></li>
+    <li style="background:#1ea3e1"><a href="{{path('solicitudes_profesor')}}">Solicitudes</a></li>
+    <li style="background:#1ea3e1"><a href="{{path('examenes')}}">Examenes</a></li>
+    <li style="background:#1ea3e1"><a href="{{path('rubricas')}}">Rúbricas</a></li>
+    <li style="background:#27a853;"><a href="#">Listas de Cotejo</a></li>
+    <li style="background:#27a853;"><a href="#">Reportes</a></li>
+   
+</nav>

@@ -1,0 +1,59 @@
+#Routing ApplicationBundle
+
+login:
+    path: /login
+    defaults: { _controller: ApplicationBundle:Default:login }
+
+login_check:
+   path: /login_check
+
+logout:
+    path: /logout
+# Luego de hacer Login o registrarse TODOS van a esta ruta    
+inicio:  
+    path: /home
+    defaults: {_controller: ApplicationBundle:Default:inicio}
+    options:
+        expose: true
+    
+registro_estudiante:
+    path:     /registro
+    defaults: { _controller: EstudianteBundle:Registro:registro }
+    
+select_seccion:
+    path: /ajaxSeccion
+    defaults: {_controller: ProfesorBundle:Seccion:obtenerSeccion}
+
+form_cambiar_password:
+    path: /formCambiarPassword
+    defaults: {_controller: ApplicationBundle:Default:formCambiarPassword}
+
+cambiar_password:
+    path: /cambiarPassword
+    defaults: {_controller: ApplicationBundle:Default:cambiarPassword}
+
+resetPassword:
+    path: /resetPassword/{var}/{id}/{ch}
+    defaults: {_controller: ApplicationBundle:Default:resetPassword}
+
+new_password:
+    path: /newPassword/{id}/{val}
+    defaults: {_controller: ApplicationBundle:Default:newPassword}
+
+materia:
+    path: admin/materia
+    defaults: {_controller: ApplicationBundle:Materia:ver}
+
+crear_materia:
+    path: admin/crearMateria
+    defaults: {_controller: ApplicationBundle:Materia:crear}
+
+registro_profesor:
+    path:     admin/registroProfesor
+    defaults: { _controller: ApplicationBundle:Registro:registro }
+
+profesores:
+    path:     admin/verProfesores
+    defaults: { _controller: ApplicationBundle:Profesor:ver }
+    
+

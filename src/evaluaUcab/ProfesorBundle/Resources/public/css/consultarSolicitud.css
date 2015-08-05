@@ -1,0 +1,67 @@
+/* 
+    Document   : consultarSolicitud
+    Created on : 29-oct-2014, 14:34:52
+    Author     : Legna Filloy
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+    Document   : crearMateria
+    Created on : 13-oct-2014, 15:27:19
+    Author     : Legna Filloy
+    Description:
+        Purpose of the stylesheet follows.
+*/
+@font-face {
+    font-family: 'DKCrayon';
+    src: url('../fonts/DKCrayonCrumble.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body{
+     font-family: "Comic Sans MS";
+}
+
+h2{
+    font-family: "DKCrayon"; 
+    margin-left: 1.5em;
+    margin-top: 1em;
+    font-weight: bold;
+
+}
+#boton{
+    margin-left: 27.5em;
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
+
+#form_seccion{
+    margin-left: 1.4em;
+}
+#seccionSolicitudesPendientes{
+    background: white;
+    width: 65em;
+    min-height: 20em;
+    border-radius: 0.3em;
+    border:#969896 0.2em solid;
+    margin-left: 14em;
+    margin-top: 3.5em;   
+}
+
+span{
+    margin-left: 2em;
+    font-size: 18px;
+}
+
+#listaEstudiantes{
+    list-style: none;
+    list-style-type: none;
+        
+    
+}
+
+
+
+

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Twitter Bootstrap jQuery Calendar component</title>
+
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="css/alertCustomize.css">
+        <link rel="stylesheet" href="components/bootstrap3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="components/bootstrap3/css/bootstrap-theme.min.css">
+
+        <link rel="stylesheet" href="css/calendar.css">
+        <link rel="stylesheet" href="css/modalComponents.css">
+
+    </head>
+    <body>
+      <script>
+        
+       var cadena = window.location.search.substring(1);
+      
+       var res1 = cadena.split("&");  
+       var res2 = res1[0].split("=");
+       var res3 = res1[1].split("=");
+       
+       var id= res2[1]; //id del usuario
+       var val = res3[1];
+     
+       localStorage.setItem("userid",id); //variable q contiene el id del usuario o la seccion
+       localStorage.setItem("val",val);  //variable q identifica si es estudiante(0) o profesor(1)
+   
+
+      </script>
+        <div id="container" class="container" >
+
+            <div class="page-header" style="" >
+              <!-- Add event -->
+                <!-- Button trigger modal -->
+                <button class="btn btn-primary " data-toggle="modal" data-target="#myModal">
+                   Añadir evento
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header" id="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Añadir evento</h4>
+                            </div>
+
+                            <div class="modal-body">
+
+                                <span class="span"> Título</span> <br>
+                                <input id="tituloEvento" name="tituloEvento" type="text" class="input" required > <br><br>
+                                <span class="span"> Descripción</span> <br>
+                                <textarea id="detalleEvento" class="textArea" required>   </textarea> <br><br>
+                                <span class="span">Tipo de evento</span> <br>
+                                 <select id="tipoEvento" name="tipoEvento" class="select"  required >
+                                        <option value ="" disabled selected>Seleccione</option>
+                            <option value ="event-special">Especial</option>
+                            <option value ="event-important">Importante</option>
+                            <option value ="event-info" >Informativo</option>
+                            <option value ="event-success">Principal</option>
+                            <option value ="event-inverse">Secundario</option>
+                            <option value ="event-warning">Urgente</option>
+                         
+                                 </select> <br><br>
+                                <span class="span" > Inicio </span> <br>
+                                <input id="inicioEvento" name="inicioEvento" type="datetime-local" class="fecha" required > <br><br>
+                                <span class="span"> Fin</span> <br>
+                                <input id="finEvento" name="finEvento" type="datetime-local" class="fecha" required > <br><br>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-primary" onclick="validate(0)">Guardar</button>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+              <!-- Add event -->
+
+                <div class="pull-right form-inline">
+                    <div class="btn-group">
+                        <button class="btn btn-primary" data-calendar-nav="prev"><< Ant</button>
+                        <button class="btn btn-default" data-calendar-nav="today">Hoy</button>
+                        <button class="btn btn-primary" data-calendar-nav="next">Sig >></button>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-warning" data-calendar-view="year">Año</button>
+                        <button class="btn btn-warning active" data-calendar-view="month">Mes</button>
+                        <button class="btn btn-warning" data-calendar-view="week">Semana</button>
+                        <button class="btn btn-warning" data-calendar-view="day">Día</button>
+                    </div>
+                </div>
+
+                <h3></h3>
+
+            </div>
+
+            <div  class="row" style="">
+                <div  class="col-md-9">
+                    <div  id="calendar"></div>
+                    
+                </div>
+
+
+            </div>
+
+            <div class="clearfix"></div>
+            <br><br>
+
+            <div class="modal fade" id="events-modal" tabindex="-1" role="dialog" aria-hidden="true">
+
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title">Ver detalles</h4>
+                        </div>
+
+                          <!-- modal body -->
+
+                        <br>
+                        <span  style="margin-left: 2em;" class="span"> Título</span> <br>
+                        <input id="viewTituloEvento" name="viewTituloEvento" type="text" class="input" style="margin-left: 2em;" required > <br><br>
+                        <span class="span" style="margin-left: 2em;"> Descripción</span> <br>
+                        <textarea style="margin-left: 2em;" id="viewDetalleEvento" class="textArea" required>   </textarea> <br><br>
+                        <span style="margin-left: 2em; " class="span">Tipo de evento</span> <br>
+                        <select  style="margin-left: 2em;" id="viewTipoEvento" name="viewTipoEvento" class="select"  required >
+                            <option value ="" disabled selected>Seleccione</option>
+                            <option value ="event-special">Especial</option>
+                            <option value ="event-important">Importante</option>
+                            <option value ="event-info" >Informativo</option>
+                            <option value ="event-success">Principal</option>
+                            <option value ="event-inverse">Secundario</option>
+                            <option value ="event-warning">Urgente</option>
+                         
+                        </select> <br><br>
+                        <span style="margin-left: 2em;" class="span" > Inicio </span> <br>
+                        <input style="margin-left: 2em;" id="viewInicioEvento" name="viewInicioEvento" type="datetime-local" class="fecha" required > <br><br>
+                        <span style="margin-left: 2em;" class="span"> Fin</span> <br>
+                        <input style="margin-left: 2em;" id="viewFinEvento" name="viewFinEvento" type="datetime-local" class="fecha" required > <br><br>
+
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" onclick="validate(1)" >Save changes</button>
+                            <button type="button" class="btn btn-danger" onclick="alertDGC('Borrar evento','prompt','deleteEvent')" >Delete</button>
+                        </div>
+
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            
+
+
+        </div>
+        <script type="text/javascript" src="components/jquery/jquery.min.js"></script>
+            <script type="text/javascript" src="components/underscore/underscore-min.js"></script>
+            <script type="text/javascript" src="components/bootstrap3/js/bootstrap.js"></script>
+            <script type="text/javascript" src="components/jstimezonedetect/jstz.min.js"></script>
+
+            <script type="text/javascript" src="js/language/es-ES.js"></script>
+            <script type="text/javascript" src="js/calendar.js"></script>
+            <script type="text/javascript" src="js/app.js"></script>
+    </body>
+</html>

@@ -1,0 +1,4 @@
+<option value="" disabled selected>Seleccione</option>
+{% for examen in examenes %}
+    <option value="{{examen.id}}">{{examen.titulo}}</option>
+{% endfor %}

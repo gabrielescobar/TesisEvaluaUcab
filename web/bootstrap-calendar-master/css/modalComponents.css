@@ -1,0 +1,36 @@
+/*Estilo para los modales de añadir evento y modificar evento del calendario*/
+.input{
+  width: 35em;
+  height: 2em;
+   border:#969896 0.2em solid;
+   border-radius:0.5em;
+
+
+}
+
+.textArea{
+  width: 35em;
+  height: 6em;
+   border:#969896 0.2em solid;
+   border-radius:0.5em;
+
+}
+
+.span{
+  font-weight: bold;
+
+}
+
+.select{
+  height: 2em;
+   border:#969896 0.2em solid;
+  border-radius:0.5em;
+}
+.fecha{
+    border:#969896 0.2em solid;
+   border-radius:0.5em;
+}
+
+.input, .textArea, .select, .fecha:hover{
+  outline: none;
+}

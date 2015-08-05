@@ -1,0 +1,11 @@
+<div style="margin-top: 2em">Estudiante: {{estudiante.nombre}} {{estudiante.apellido}}</div>
+<nav id="menuLateral">
+          <ul>
+           <li style="height: 4em; width: 14em;" ><a href="{{path('ver_asignaciones_estudiante',{'idPortafolio':portafolio.id,'idEstudiante':estudiante.id})}}"><p style=" margin-left: 3em;">Asignaciones</p></a></li>
+           <li style="height: 4em; width: 14em;"><a href="{{path('ver_examenes_estudiante', {'idPortafolio':portafolio.id, 'idEstudiante':estudiante.id})}}"><p style=" margin-left: 3.4em;">Examenes</p></a></li>
+           
+           <li style="height: 4em; width: 14em;"><a href="#"><p style=" margin-left: 4.3em;">Notas</p></a></li>
+           
+          
+          </ul>
+  </nav>

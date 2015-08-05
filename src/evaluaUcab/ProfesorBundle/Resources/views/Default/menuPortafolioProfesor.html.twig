@@ -1,0 +1,12 @@
+<nav id="menuLateral">
+          <ul>
+            <li style="height: 4em; width: 14em;" ><a href="{{path('asignaciones',{'idPortafolio':portafolio.id})}}"><p style=" margin-left: 3em;">Asignaciones</p></a></li>
+            <li style="height: 4em; width: 14em;"><a href="{{path('estudiantes_en_seccion',{'idSeccion':portafolio.seccion.id})}}"><p style=" margin-left: 3.8em;">Alumnos</p></a></li>
+            <li style="height: 4em; width: 14em;"><a href="{{path('calendario_profesor',{'idSeccion': portafolio.seccion.id})}}"><p style=" margin-left: 3.4em;">Calendario</p></a></li>
+            <li style="height: 4em; width: 14em;"><a href="{{path('grupos',{'idPortafolio': portafolio.id})}}"><p style=" margin-left: 4.3em;">Grupos</p></a></li>
+            <li style="height: 4em; width: 14em;"><a href="{{path('portafolio_examenes_profesor',{'idPortafolio': portafolio.id})}}"><p style=" margin-left: 3.6em;">Examenes</p></a></li>    
+            <li style="height: 4em; width: 14em;"><a href="{{path('material_apoyo',{'idPortafolio': portafolio.id})}}"><p style=" margin-left: 1.7em;">Material de Apoyo</p></a></li>
+            <li style="height: 4em; width: 14em;"><a href="#"><p style=" margin-left: 4.3em;">Notas</p></a></li>       
+          </ul>
+  </nav>
+

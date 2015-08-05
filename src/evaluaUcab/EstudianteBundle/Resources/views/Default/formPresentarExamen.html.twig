@@ -1,0 +1,95 @@
+{% extends '::base.html.twig'%}
+{% set isProfesor = false %}
+
+{% block title %}Examen{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolio.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/examen.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('Flipclock/compiled/flipclock.css') }}" rel="stylesheet" type="text/css" />
+
+{% endblock %}
+
+{% block body %}
+  {#archivo que está en app/Resources, carga el header de la página#}
+{% include '::header.html.twig' %}
+   
+<div class="clock" style="margin-left:35em;"></div>
+
+<div class="message"></div>
+   {#Si el usuario logueado es estudiante, carga la navegacion de estudiante #}
+   {% include 'EstudianteBundle:Default:navEstudiante.html.twig' %}
+   {% include 'EstudianteBundle:Default:menuPortafolio.html.twig' %}
+
+
+<section id="contenidoPortafolio">
+
+    <h2>Examen</h2>
+     <hr style="border: 0; height: 5px; box-shadow: inset 0 12px 12px -12px #1ea3e1; margin-left: -2em; margin-right: -2em">
+      
+    <form  action="{{ path('corregir_examen', {'idExamenPortafolio': idExamenPortafolio}) }}" method="post" >  
+       
+         {{ form_rest(form) }}
+        <button id="presentar" type="submit" class="btn btn-success" style="margin-bottom: 2em; margin-left: 26em" >Finalizar</button>
+   </form> 
+</section>
+
+
+{% endblock %}  
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+<script src="{{ asset('Flipclock/compiled/flipclock.js') }}"></script>
+<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+<script>
+   $(document).ready(function(){ 
+            
+       var valor;
+       $("label").each(function(){
+          valor= $(this).text();
+          $(this).html(valor);
+          //alert(valor);
+           
+       });  
+              
+       $("textarea").each(function(){
+          $(this).after("<br>"); //Después
+       });
+       
+       $("div").each(function(){
+          $(this).after("<br>"); //Después
+       });
+       
+       $("input").each(function(){
+          $(this).before("<br>"); //Antes
+       });
+       
+       
+        var clock;
+	clock = $('.clock').FlipClock({{duracion}}, {
+	    clockFace: 'HourlyCounter',
+            countdown: true,
+            language: 'es',
+	    callbacks: {
+		         stop: function() {
+		            
+                             window.location.href = Routing.generate('corregir_examen',{idExamenPortafolio: {{idExamenPortafolio}}});
+                           // $('#presentar').click();
+		          }
+		       }
+		    });
+     
+    });
+ </script>  
+{% endblock %}
+
+
+
+

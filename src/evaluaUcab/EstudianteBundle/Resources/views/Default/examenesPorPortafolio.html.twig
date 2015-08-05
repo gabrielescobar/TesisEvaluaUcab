@@ -1,0 +1,77 @@
+{% extends '::base.html.twig'%}
+{% set isProfesor = false %}
+
+{% block title %}Examenes{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolio.css') }}" rel="stylesheet" type="text/css" />
+
+{% endblock %}
+
+{% block body %}
+  {#archivo que está en app/Resources, carga el header de la página#}
+{% include '::header.html.twig' %}
+
+   {#Si el usuario logueado es estudiante, carga la navegacion de estudiante #}
+{% include 'EstudianteBundle:Default:navEstudiante.html.twig' %}
+{% include 'EstudianteBundle:Default:menuPortafolio.html.twig' %}
+
+
+{% for flashMessage in app.session.flashbag.get('warning') %}
+    <div id="myAlert" class="alert alert-danger alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>{{ flashMessage }}</strong> 
+    </div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+    <div id="myAlert" class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>{{ flashMessage }}</strong> 
+    </div>
+{% endfor %}
+
+<section id="contenidoPortafolio">
+    <h2>Examenes</h2>
+    <hr style=" margin-left: -2em;width: 67.8em;border: 0; height: 5px; box-shadow: inset 0 12px 12px -12px #1ea3e1;">
+  <ol>
+{% for registro in examenPortafolio %}
+{# ... #}
+  
+      <li style="margin-left: 3em;"> <a title="Ver" href="{{ path('ver_examen_estudiante',{'idExamenPortafolio':registro.id}) }}" >
+        {{registro.examen.titulo}}  </a> 
+              {%if registro.tipo == 0%}
+                 <img title="Examen Individual" id="logo" src="{{asset('bundles/application/images/individual.png')}}"/>
+              {%else%}
+                 <img title="Examen Grupal" id="logo" src="{{asset('bundles/application/images/mixto.png')}}"/>
+              {%endif%}
+                 <span style="float:right">Fecha de cierre: {{ registro.fechaCierre|date('d/m/Y', timezone="America/Caracas") }} {{ registro.horaCierre|date('H:i', timezone="America/Caracas") }}</span>   
+        
+      </li><br>
+      
+  
+   {% endfor %}
+  </ol>
+</section>
+
+
+{% endblock %}  
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+<script type = "text/javascript" >
+history.pushState(null, null, '');
+window.addEventListener('popstate', function(event) {
+history.pushState(null, null, '');
+});
+</script>
+{% endblock %}
+

@@ -1,0 +1,140 @@
+@charset "utf-8";
+/* CSS Document */
+
+@font-face {
+    font-family: 'DKCrayon';
+    src: url('../fonts/DKCrayonCrumble.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body{
+
+    font-family: "Comic Sans MS";
+    background: url('../images/blackboard.jpeg');
+}
+
+span{
+    font-weight: bold;
+    
+}
+.requerido{
+    color:red;
+}
+
+h1{
+    font-family: "DKCrayon";
+    font-size: 5em;
+    margin-left: 6em;
+    margin-top: 0em;
+    color: white;
+
+}
+h2{
+    font-family: "DKCrayon"; 
+    margin-left: 2.5em;
+    margin-top: 1em;
+
+    font-weight: bold;
+
+}
+
+li{
+    list-style-type:none;
+    margin-left: 4em;
+    font-weight: bold;
+}
+
+.lista{
+    padding-left: 0.5em;
+    border:solid 0.3em #01ACFE;
+    border-radius:1.5em;
+    font-size:16px;
+    width:17.8em;
+    height: 2.1em;
+    margin-left: 4em;
+    margin-bottom: 0.8em; 	  
+}
+
+.lista:focus{
+    outline: none;
+
+}
+
+#cargarFoto{
+    margin-left: 5em;
+}
+
+#recuadro{
+    box-shadow: 3px 4px 30px #888888;
+    width: 40em;
+    height: 45em;
+    margin-left: 28em;
+    margin-top: 3em;
+     background: url('../images/fondoRaya.png');
+    background-repeat: repeat-y;
+    background-size: 100%;
+    border-radius: 0.5em;
+
+}
+#logo{
+    margin-top: 1.5em;
+    margin-left: 3em;
+}
+
+#campos{
+    margin-left: 3.5em;
+    margin-top: 1em;
+}
+
+.entrada{
+    padding:0.5em;
+    border:solid 0.3em #01ACFE;
+    border-radius:1.5em;
+    font-size:16px;
+    width:16em;
+    height: 1em;
+    margin-left: 4em;
+    margin-bottom: 0.5em; 	
+}
+
+entrada:focus{
+    outline: none;
+
+}
+
+
+.button:hover{
+    cursor: pointer; 
+    background: #e4ba06;
+}
+
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+}
+
+#selecArchivo{
+    font-size: 18px;
+}
+
+footer
+{
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    margin-left: 24em;
+    margin-top: 2em;
+
+}

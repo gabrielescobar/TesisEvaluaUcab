@@ -1,0 +1,15 @@
+{# empty Twig template #}
+
+<nav id="menu">
+          <li style="background:#e4ba06;"><a href="#">Portafolios</a>
+         
+         {{ render(controller('EstudianteBundle:Portafolio:listaPortafolios')) }}
+         
+         </li>
+         
+         <li style="background:#e4ba06;"><a href="{{path('mapas_mentales',{'idEstudiante':app.user.id}) }}">Mapas mentales</a></li>
+         <li style="background:#09ABF2;"><a href="{{path('presentacion')}}">Presentaciones</a></li>
+         <li style="background:#09ABF2;"><a href="{{ path('calendario_estudiante')}}">Calendario</a></li>
+         <li style="background:#4CAE4C;"><a href="{{ path('solicitud')}}">Solicitudes</a></li>
+         <li style="background:#4CAE4C"><a href="#">Calificaciones</a></li>
+</nav>

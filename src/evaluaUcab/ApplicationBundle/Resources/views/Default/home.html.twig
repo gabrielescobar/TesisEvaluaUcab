@@ -1,0 +1,74 @@
+{#Pagina q se mostrara luego del login, detecta el rol y segun corresponda, carga la vista adecuada #}
+
+{% set administrator = false %}
+{% if is_granted('ROLE_ADMIN') %}
+    {% set administrator = true %}
+{%else%}
+
+{%endif%}
+{% if is_granted('ROLE_ESTUDIANTE') %} 
+   {% set isProfesor = false %}
+{% elseif is_granted('ROLE_PROFESOR') %}
+   {% set isProfesor = true %}
+{% endif %}
+
+{% extends '::base.html.twig'%}
+
+{% block title %}Home{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+{% if (isProfesor == false) and (administrator == false) %} 
+   {#Si el usuario logueado es estudiante, carga la navegacion de estudiante #}
+   <link href="{{ asset('bundles/application/css/menuPortafolioEstudiante.css') }}" rel="stylesheet" type="text/css" />
+
+{% elseif (isProfesor == true) and (administrator == false) %}
+  <link href="{{ asset('bundles/application/css/menuPortafolioProfesor.css') }}" rel="stylesheet" type="text/css" />
+
+{% endif %}
+ <link href="{{ asset('bundles/application/css/menuPortafolioProfesor.css') }}" rel="stylesheet" type="text/css" />
+
+
+{% endblock %}
+
+{% block body %}
+ 
+ {% for flashMessage in app.session.flashbag.get('notice') %}
+    <div id="myAlert" class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>{{ flashMessage }}</strong> 
+    </div>
+{% endfor %}
+  {#archivo que está en app/Resources, carga el header de la página#}
+{% include '::header.html.twig' %}
+
+{% if (isProfesor == false) and (administrator == false) %} 
+   {#Si el usuario logueado es estudiante, carga la navegacion de estudiante #}
+   {% include 'EstudianteBundle:Default:navEstudiante.html.twig' %}
+
+{% elseif (isProfesor == true) and (administrator == false) %}
+   {#Si el usuario logueado es profesor, carga la navegacion de profesor #}
+   {% include 'ProfesorBundle:Default:navProfesor.html.twig' %}
+{% elseif (administrator == true) %} 
+   {% include 'ApplicationBundle:Default:navAdmin.html.twig' %}
+{% endif %}
+
+<h2>¡Bienvenido!</h2>
+
+
+
+{% endblock %}  
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+<script type="text/javascript">
+     
+    </script>
+{% endblock %}
+

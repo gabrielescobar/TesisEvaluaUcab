@@ -1,0 +1,85 @@
+/* 
+    Document   : editarEstudiante
+    Created on : 02-oct-2014, 11:06:47
+    Author     : Legna Filloy
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+@font-face {
+    font-family: 'DKCrayon';
+    src: url('../fonts/DKCrayonCrumble.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+body{
+    font-family: "Comic Sans MS";
+}
+
+.lista{
+    padding-left: 0.5em;
+    border:solid 0.3em #01ACFE;
+    border-radius:1.5em;
+    font-size:16px;
+    width:17.8em;
+    height: 2.1em;
+    margin-left: 4em;
+    margin-bottom: 0.8em; 	  
+}
+
+.lista:focus{
+    outline: none;
+}
+
+h2{
+    font-family: "DKCrayon"; 
+    margin-left: 2.5em;
+    font-weight: bold;
+}
+
+span{
+    font-weight: bold;   
+}
+
+#campos{
+    margin-left: 5em;
+    margin-top: 0em;
+}
+
+.requerido{
+    color:red;
+}
+#bInicio{
+   margin-left: 18.5em;
+   margin-top: -6.9em;
+}
+#recuadro{
+   
+    padding: 1em;
+    width: 40em;
+    height: 32em;
+    margin-left: 27em;
+    margin-top: 3.4em;
+    border-radius: 0.5em;
+    border:#969896 0.2em solid;
+    background: #FFF;
+
+}
+
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+}

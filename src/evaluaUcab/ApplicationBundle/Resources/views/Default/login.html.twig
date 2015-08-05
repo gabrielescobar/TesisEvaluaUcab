@@ -1,0 +1,56 @@
+{% extends '::base.html.twig'%}
+{% set error =''%}
+{% block title %}Login{% endblock %}
+
+{% block stylesheets %}
+
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+
+<link href="{{ asset('bundles/application/css/cssIndex.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block body %}
+
+{% set locale = app.request.locale %}
+
+<h1>Bienvenido </h1>
+{% for flashMessage in app.session.flashbag.get('notice') %}
+    <div id="myAlert" class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>{{ flashMessage }}</strong> 
+    </div>
+{% endfor %}
+{% for flashMessage in app.session.flashbag.get('warning') %}
+    <div id="myAlert" class="alert alert-danger alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>{{ flashMessage }}</strong> 
+    </div>
+{% endfor %}
+<section id="seccion">
+    <img id ="logo" src="{{asset('bundles/application/images/bigLogo.png')}}"/>
+  
+    <h2>Accede a tu cuenta</h2>
+    {% if error %}
+<div>{{ error.message|trans }}</div>
+{% endif %}
+    <form action="{{ path('login_check') }}" method="post">
+   
+            <input id="username" title="Introduzca su e-mail" type="text" name="_username" placeholder="Email" class="input" value="{{ last_username | default('') }}" required /><br>
+            <input id="password" title="Introduzca su contraseña" type="password" name="_password" class="input" placeholder="Password" required/><br>
+            <input style="margin-left: 5em" type="checkbox" id="no_cerrar" name="_remember_me" checked />
+            <label for="no_cerrar" >Seguir conectado</label> 
+            <span> Regístrate </span> <a href="{{path ('registro_estudiante')}}"> aquí</a><br>
+            <a style="font-size: 12px; margin-left: 6em" href="{{path ('form_cambiar_password')}}">¿Olvidó su contraseña?</a><br>
+     
+            <input type="submit" value="Ingresar" style="margin-left: 5em; margin-top:1em " class="btn btn-success" name="login" /><br>
+            
+        </form>
+    </section>
+   {% endblock %}         
+{% block javascripts %}
+    <script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+    <script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,4 @@
+<option value="" disabled selected>Seleccione</option>
+{% for seccion in secciones %}
+    <option value="{{seccion.id}}">{{seccion.nombre}}-{{seccion.codigo}}  </option>
+{% endfor %}

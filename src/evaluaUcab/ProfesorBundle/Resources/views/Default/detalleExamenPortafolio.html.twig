@@ -1,0 +1,77 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = true %}
+{% block title %}Detalle{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioProfesor.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/portafolioProfesor.css')}}" rel="stylesheet" type="text/css"/>
+
+{% endblock %}
+
+
+{% block body %}
+
+{% include '::header.html.twig' %}
+{% include 'ProfesorBundle:Default:navProfesor.html.twig' %}
+{% include 'ProfesorBundle:Default:menuPortafolioProfesor.html.twig' %}
+
+{% for flashMessage in app.session.flashbag.get('warning') %}
+<div id="myAlert" class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+    <strong>{{ flashMessage }}</strong> 
+</div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+<div id="myAlert" class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+    <strong>{{ flashMessage }}</strong> 
+</div>
+{% endfor %}
+
+
+<section id="contenidoPortafolio">
+
+
+    <h2>Detalle </h2>
+    <hr style="margin-left: -2em; width: 67.8em; border: 0; height: 5px; box-shadow: inset 0 12px 12px -12px #1ea3e1;">
+
+    <br><br><span> Fecha de inicio:  {{ examenPortafolio.fechaInicio |date("Y-m-d") }} </span><br><br>
+    <span> Fecha de cierre: {{examenPortafolio.fechaCierre |date("Y-m-d")}}</span><br><br>
+    <span> Hora de cierre: {{examenPortafolio.horaCierre |date("H:i")}}</span><br><br>
+    <span> Duración: {{examenPortafolio.duracion |date("H:i")}}</span><br><br>
+      {%if examenPortafolio.tipo == 0 %}
+    <span>Presentación Individual</span><br><br>
+      {%else%}
+    <span>Presentación Grupal</span><br><br>
+      {%endif%}
+
+    <form method="link" action="{{ path('portafolio_examenes_profesor',{'idPortafolio':portafolio.id}) }}" > 
+        <button  style="margin-top: 7em; margin-left: 27.5em" type="submit" class="btn btn-info" >Regresar</button>
+    </form>
+
+</section>
+
+
+
+
+
+{% endblock %} 
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+<script src="{{ asset('bundles/profesor/js/importarExamen.js') }}"></script>
+{% endblock %}
+
+
+
+

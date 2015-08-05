@@ -1,0 +1,56 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = true %}
+{% block title %}Solicitudes{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioProfesor.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/consultarSolicitud.css') }}" rel="stylesheet" type="text/css" />
+
+{% endblock %}
+
+{% block body %}
+
+{% include '::header.html.twig' %}
+{% include 'ProfesorBundle:Default:navProfesor.html.twig' %}
+
+<section id="seccionSolicitudesPendientes">
+     <h2>Solicitudes pendientes de estudiantes  </h2>
+     <hr style="border: 0; height: 5px; box-shadow: inset 0 12px 12px -12px #1ea3e1;">
+   <ul id="listaEstudiantes">  
+  {% for solicitud in pagination %}
+     <li>{{solicitud.estudiante.nombre |lower|capitalize}} {{solicitud.estudiante.apellido  |lower|capitalize}} 
+     <a style="float:right; padding-right: 2em;" title="Rechazar Solicitud" href="{{path('rechazar_solicitud', {'id': solicitud.id})}}" > <img id="logo" src="{{asset('bundles/application/images/incorrecto.png')}}"/> </a>
+     <a style="float:right" title="Aceptar Solicitud" href="{{path('aceptar_solicitud', { 'id': solicitud.id }) }}" > <img id="logo" src="{{asset('bundles/application/images/correcto.png')}}"/> </a>   
+     </li>
+     <hr style="margin-left: -2.8em">
+    
+    {% endfor %}
+      <div id="pag" class="navigation">
+      {{ knp_pagination_render(pagination) }}
+    </div> 
+  </ul>
+     
+     
+<form method="link" action="{{ path('solicitudes_profesor') }}" > 
+    <button id="boton" type="submit" class="btn btn-info" >Regresar</button>
+</form>
+          
+</section>
+
+{% endblock %} 
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+<script type="text/javascript">
+
+{% endblock %}
+
+
+
+
+

@@ -1,0 +1,29 @@
+/* 
+    Document   : examen
+    Created on : 25-mar-2015, 16:26:11
+    Author     : Legna Filloy
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+@font-face {
+    font-family: 'DKCrayon';
+    src: url('../fonts/DKCrayonCrumble.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h2{
+    font-family: "DKCrayon"; 
+   
+    margin-top: 1em;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
+.espacio{
+    margin-top: 1em;
+}
+
+
+

@@ -1,0 +1,134 @@
+{% extends '::base.html.twig'%}
+{% set isProfesor = true %}
+
+{%block meta%}<meta name="mapa"> </meta> {%endblock%}
+{% block title %}Asignaciones{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioProfesor.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/portafolioProfesor.css')}}" rel="stylesheet" type="text/css"/>
+<link href="{{ asset('bundles/profesor/css/alertCustomize.css') }}" rel="stylesheet" type="text/css" />
+
+{% endblock %}
+
+{% block body %}
+  {#archivo que está en app/Resources, carga el header de la página#}
+{% include '::header.html.twig' %}
+{% include 'ProfesorBundle:Default:navProfesor.html.twig' %}
+{% include 'ProfesorBundle:Default:menuVerPortafolioGrupo.html.twig' %}
+
+{% for flashMessage in app.session.flashbag.get('warning') %}
+    <div id="myAlert" class="alert alert-danger alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>{{ flashMessage }}</strong> 
+    </div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+    <div id="myAlert" class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>{{ flashMessage }}</strong> 
+    </div>
+{% endfor %}
+
+<section id="contenidoPortafolio">
+    <h2>Asignaciones del Grupo</h2>
+    <hr style=" margin-left: -2em;width: 67.8em;border: 0; height: 5px; box-shadow: inset 0 12px 12px -12px #1ea3e1;">
+     
+    
+    <div role="tabpanel" style="width: 67.7em; margin-left: -2em">
+     <!-- Nav tabs -->
+       <ul class="nav nav-tabs" role="tablist">
+         <li role="presentation" class="active"><a href="#autoevaluacion" aria-controls="autoevaluacion" role="tab" data-toggle="tab">Autoevaluaciones</a></li>
+         <li role="presentation"><a href="#coevaluacion" aria-controls="coevaluacion" role="tab" data-toggle="tab">Coevaluaciones</a></li>
+         <li role="presentation" ><a href="#mapasmentales" aria-controls="mapasmentales" role="tab" data-toggle="tab">Mapas Mentales</a></li>
+         <li role="presentation"><a href="#presentaciones" aria-controls="presentaciones" role="tab" data-toggle="tab">Presentaciones</a></li>
+            </ul>
+
+     <!-- Tab panes -->
+       <div class="tab-content">
+         <div role="tabpanel" class="tab-pane" id="mapasmentales" style="padding: 1em">
+             {#Asignacion individual 0#}  {#Asignacion grupal 1#}
+             <ol> 
+               {% for mapaMental in mapasMentales %}
+                                   
+                  {%if mapaMental.modoPresentacion == 1%} 
+                     <li> 
+                         {%if mapaMental.rubrica == null%}
+                           <a title="Ver" target="_blank"  href="{{asset('MapaMental_vista/index.html?idestudiante=68' 
+                             ~'&estsecc=null'~'&estgrupo=53'~'&idasignacion='~mapaMental.id~
+                             '&idmapa=0'~'&idlista='~mapaMental.lista.id~'&idgrupo='~grupo.id~
+                             '&idrubrica=0'~'&tipo='~0~'')}}"> {{mapaMental.titulo}} </a>
+                         {%elseif mapaMental.lista == null%}
+                          <a title="Ver" target="_blank"  href="{{asset('MapaMental_vista/index.html?idestudiante=68' 
+                             ~'&estsecc=null'~'&estgrupo=53'~'&idasignacion='~mapaMental.id~
+                             '&idmapa=0'~'&idlista=0'~'&idgrupo='~grupo.id~
+                             '&idrubrica='~mapaMental.rubrica.id~'&tipo='~0~'')}}"> {{mapaMental.titulo}} </a>
+                         {%endif%}
+                          <p style="float:right">Fecha de cierre:
+                         {{ mapaMental.fechaCierre|date('d/m/Y H:i', timezone="America/Caracas") }} </p>                                  
+                    </li><br>
+                     {%endif%}     
+               {% endfor %}
+             </ol>
+                  
+         </div>
+         <div role="tabpanel" class="tab-pane" id="presentaciones" style="padding: 1em">
+               <ol>
+                 {% for presentacion in presentaciones %}
+                 
+                    <li > <a title="Ver Presentación" href="#" >
+                        {{presentacion.titulo}}</a> 
+                      
+                    <p style="float:right">Fecha de cierre:
+                         {{ presentacion.fechaCierre|date('d/m/Y H:i', timezone="America/Caracas") }}</p>      
+                  </li><br>        
+               {% endfor %} 
+              </ol>
+         </div>
+         <div role="tabpanel" class="tab-pane active" id="autoevaluacion" style="padding: 1em">
+            <ol>
+             {% for autoevaluacion in autoevaluaciones %}
+                <li > <a title="Ver" href="#" >
+                        {{autoevaluacion.titulo}} </a>
+                     <p style="float:right">Fecha de cierre:
+                         {{ autoevaluacion.fechaCierre|date('d/m/Y H:i', timezone="America/Caracas") }}</p>       
+                  </li><br>
+          
+               {% endfor %} 
+               </ol>
+         </div>
+         <div role="tabpanel" class="tab-pane" id="coevaluacion" style="padding: 1em">
+             {% for coevaluacion in coevaluaciones %}
+                 <ol>
+                    <li style="margin-left: 3em;"> <a title="Ver" href="#" >
+                        {{coevaluacion.titulo}}  </a>
+                 
+                     <p style="float:right">Fecha de cierre:
+                         {{ coevaluacion.fechaCierre|date('d/m/Y H:i', timezone="America/Caracas") }} </p>       
+                  </li><br>
+                
+                </ol>
+               {% endfor %} 
+         </div>
+       </div>
+  </div>
+    
+</section>
+
+
+{% endblock %}  
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+
+{% endblock %}
+

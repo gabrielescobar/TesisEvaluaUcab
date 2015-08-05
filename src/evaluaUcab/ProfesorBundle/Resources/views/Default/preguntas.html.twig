@@ -1,0 +1,105 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = true %}
+{% block title %}Preguntas{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/examenes.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioProfesor.css') }}" rel="stylesheet" type="text/css" />
+
+
+{% endblock %}
+
+{% block body %}
+
+{% include '::header.html.twig' %}
+{% include 'ProfesorBundle:Default:navProfesor.html.twig' %}
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+<div id="myAlert" class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+    <strong>{{ flashMessage }}</strong> 
+</div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('warning') %}
+<div id="myAlert" class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+    <strong>{{ flashMessage }}</strong> 
+</div>
+{% endfor %}
+
+<section id="recuadroPreguntas"> 
+
+ <form name="form" action="{{ path('registrar_pregunta', { 'id': id })}}" method="post" >
+         <h2>Crear Pregunta</h2>
+         <hr>
+        <span>Enunciado: </span> 
+        {#Agregar el editor#}
+         {{ form_rest(form) }}
+      {#  <input id="form_pregunta" name="form_pregunta" required class="tituloP"> </input> <br>#}
+        <span style="margin-left: 1em">Tipo:</span> 
+        <select id="form_tipo" name="form_tipo" class="common"> 
+            <option value="simple">Seleccion Simple </option>
+            <option value="multiple">Seleccion Múltiple </option>
+            <option value="escrito">Escrito </option> 
+            
+        </select><br><br>
+        <span  id="etiqueta" style="visibility: hidden;margin-left: 1em">Calificación:</span> 
+        <input  id="form_puntaje" type="hidden" name="form_puntaje" > </input><br>
+
+        <button id="bCrearPregunta" type="submit" class="btn btn-success" >Guardar</button>
+ 
+    </form>
+
+    <form action="{{ path('fin_preguntas',{'idExamen': id}) }}" method="post" >
+
+        <button id="bFinPregunta" type="submit" class="btn btn-danger" >Finalizar Preguntas</button>
+
+    </form>
+        
+</section>
+
+{% endblock %} 
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+<script type="text/javascript">
+
+    $("#form_tipo").change(function() {
+         
+        var opcion = $(this).val();    
+        
+          if(opcion === "escrito"){ 
+              console.log(opcion);
+            $("#form_puntaje").attr("type","number");
+            $("#form_puntaje").attr("step","0.050");
+            $("#form_puntaje").attr("min","0.050");
+            $("#form_puntaje").css("width","5em");
+            $("#form_puntaje").css("margin-bottom","3em");
+          
+            $("#etiqueta").css("visibility","visible");
+             
+           
+    
+           
+          }
+          else {
+              $("#form_puntaje").attr("type","hidden");
+              $("#etiqueta").css("visibility","hidden");
+          }
+        
+                   
+         });
+   
+    </script>
+
+{% endblock %}
+

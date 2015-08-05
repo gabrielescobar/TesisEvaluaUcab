@@ -1,0 +1,168 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+#menuLateral a{ /*links*/
+	color:#000;
+	font-size: 16px;
+	font-family:'Comic Sans MS';
+	
+  		
+}
+
+#menuLateral p{
+
+ margin-top: 5%;
+
+}
+
+#menuLateral ul li{  /*items del menu*/
+	list-style-type:none;
+	width: 11.5em;
+	height: 3em;
+	background: url("../img/1.png"); /*rosado*/
+	background-repeat: no-repeat;
+	padding: 0.3em;	 
+	
+}
+
+#menuLateral ul li:hover{  /*cuando pase el mouse por los items...*/
+	/*background:#FF0; amarillo*/	
+	background: url("../img/2.png"); /*rosado*/ 
+	background-repeat: no-repeat;
+}
+
+#contenido{  /*recuadro*/
+	border: 0.2em solid #09ABF2;
+	width: 57.6em;
+	height:30em;
+	margin-top:1em;
+	padding:0;
+	margin-left:-0.2em;
+	background: #FFF;
+}
+
+#menuLateral, #contenido{
+	display:inline-block;
+	vertical-align:top;
+	margin-top: 2em;		
+}
+
+/******************************************************Menu*********************************************************************************/
+
+
+#menu, #menu ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+#menu {
+	width: 1040px;	
+	border: none;
+	font-size:16px;
+	margin-top: 1em;
+	margin-left:7em;
+}
+#menu:before, #menu:after {
+	content: "";
+	display: table;
+}
+
+#menu:after {
+	clear: both;
+}
+
+#menu li { /*************Separaciones**/
+	float: left;
+	box-shadow: 1px 0 0 #444;
+	position: relative;
+	border-radius: 0.5em;
+	margin: 0 0.5em 0 0;
+	box-shadow: 0.3em 0.3em 0.3em #000; /*X,Y,dif,color*/
+
+
+}
+
+#menu a {
+	float: left;
+	padding: 0.5em 1em 0.5em 1em; /*arriba, der, abajo, izq*/
+	text-transform: uppercase;
+	font-family:'Comic Sans MS';
+	text-decoration: none;
+	text-shadow: 0 1px 0 #000;
+	color:black;
+}
+
+#menu li:hover > a {
+	color: #000;
+}
+
+
+#menu ul { /*caja submenu*/
+	margin: 1em 0 0 0;
+	opacity: 0;
+	visibility: hidden;
+	position: absolute;
+	top: 2.3em;
+	left: 0;
+	z-index: 1;    
+	background:#e4ba06;	
+	transition: all .2s ease-in-out;  
+	border-radius: 0.5em;
+
+}
+
+#menu li:hover > ul {
+	opacity: 1;
+	visibility: visible;
+	margin: 0;
+}
+
+#menu ul ul {
+	top: 0;
+	left: 150px;
+	margin: 0 0 0 20px;	
+}
+
+#menu ul li {
+	float: none;
+	display: block;
+	box-shadow: 0 1px 0 #111, 0 2px 0 #666;
+}
+
+#menu ul li:last-child {   
+	box-shadow: none;    
+}
+
+#menu ul a {    
+	padding: 10px;
+	display: block;
+	white-space: nowrap;
+	float: none;
+	text-transform: none;
+	height: inherit;
+}
+
+
+#menu ul li:first-child > a:after { /*indicador negro*/
+	content: '';
+	position: absolute;
+	left: 40px;
+	top: -6px;
+	border-left: 6px solid transparent;
+	border-right: 6px solid transparent;
+	border-bottom: 6px solid #444;
+}
+
+
+#menu li a:hover { /*cambio de color del menu*/
+    color: #FFF;
+}
+
+#menu li ul li a { /*Fuente del submenu*/
+	font-family: "Comic Sans MS", cursive;
+	font-size:15px;
+
+}
+/*****************************************************************Fin Menu*************************************************************************/

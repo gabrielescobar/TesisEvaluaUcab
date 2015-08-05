@@ -1,0 +1,75 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = true %}
+{% block title %}Portafolio{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/crearPortafolio.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioProfesor.css') }}" rel="stylesheet" type="text/css" />
+
+
+{% endblock %}
+
+{% block body %}
+
+{% include '::header.html.twig' %}
+{% include 'ProfesorBundle:Default:navProfesor.html.twig' %}
+{{ wo_render_breadcrumbs() }}
+
+
+ <div id="dialog" style="visibility: hidden;  position: absolute; top:6.4em;  right: 4em;" class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>¡Portafolio Eliminado!</strong> 
+    </div>
+{% for flashMessage in app.session.flashbag.get('notice') %}
+    <div id="myAlert" class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>{{ flashMessage }}</strong> 
+    </div>
+{% endfor %}
+
+<form method="link" action="{{path('crear_portafolio')}}" > 
+   <button id="bCrearPortafolio" type="submit" class="btn btn-danger" >Crear portafolio</button>
+ </form>
+<section id="rPortafolio"> 
+    <h2>Buscar Portafolios </h2>
+    <hr style="border: 0; height: 5px; box-shadow: inset 0 12px 12px -12px #1ea3e1;">
+    <form action="{{ path('obtener_portafolios')}}" method="post" >
+
+        <span>Seleccione la Materia: </span>
+        <select id="form_materia" name="form_materia" class="margen" required> 
+        <option value="" disabled selected>Seleccione</option>
+       {% for materia in materias %}
+            <option value="{{materia.id}}">{{materia.nombre}}   </option>
+       {% endfor %}
+        </select><br>
+        <button id="bP" type="submit" class="btn btn-success" >Buscar</button>
+
+    </form>   
+</section>
+
+{% endblock %} 
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+<script> 
+$(document).ready(function(){
+   if (localStorage.deletePortafolio){
+        $("#dialog").css("visibility","visible");
+        localStorage.removeItem("deletePortafolio");
+    }
+});
+    
+    
+    </script>
+
+
+{% endblock %}

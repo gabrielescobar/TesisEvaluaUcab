@@ -1,0 +1,56 @@
+/* 
+    Document   : examenes
+    Created on : 18-ene-2015, 13:05:47
+    Author     : Legna Filloy
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+
+
+@font-face {
+    font-family: 'DKCrayon';
+    src: url('../fonts/DKCrayonCrumble.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body{
+     font-family: "Comic Sans MS";
+}
+
+h2{
+    font-family: "DKCrayon"; 
+    margin-left: 1.5em;
+    margin-top: 1em;
+    font-weight: bold;
+
+}
+
+span{
+    margin-left: 2em;
+    font-size: 18px;
+}
+
+
+
+#recuadroRubricas{
+    background: white;
+    width: 65em;
+    min-height: 35em;
+    border-radius: 0.3em;
+    border:#969896 0.2em solid;
+    margin-left: 14.5em;
+    margin-top: -2.5em;
+      
+}
+
+#cRubrica{
+    margin-top: 3.4em;
+    margin-left: 4em;
+}
+

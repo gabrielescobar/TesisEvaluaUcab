@@ -1,0 +1,11 @@
+<h2>Accede a tu cuenta</h2>
+    <form action="{{ path('usuario_login_check') }}" method="post">
+       
+            <input id="login_user" type="text" name="_username" placeholder="Email" class="input" value="{{ last_username | default('') }}" required /><br>
+            <input id="login_pass" type="password" name="_password" class="input" placeholder="Password" required/><br>
+            <input style="margin-left: 5em" type="checkbox" id="no_cerrar" name="_remember_me" checked />
+            <label for="no_cerrar" >Seguir conectado</label> <br>
+             <li><span> Regístrate </span> <a href="{{path ('registro_estudiante')}}"> aquí</a></li> 
+            
+            <input type="submit" value="Ingresar" class="button" />
+    </form>

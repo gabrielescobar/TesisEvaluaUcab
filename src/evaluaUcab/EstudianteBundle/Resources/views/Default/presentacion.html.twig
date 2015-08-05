@@ -1,0 +1,39 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = false %}
+{% block title %}Presentación{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/presentacion.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioEstudiante.css') }}" rel="stylesheet" type="text/css" />
+
+{% endblock %}
+
+{% block body %}
+
+
+{% include '::header.html.twig' %}
+{% include 'EstudianteBundle:Default:navEstudiante.html.twig' %}
+
+<section style="margin-left: 6em; margin-top: 3em; " id="seccionDiarios">
+    <h2>Presentación </h2>
+   <iframe style="border:none; width: 78em; height: 60em; margin-top: -1.5em " src="http://localhost/Presentacion/"></iframe>  
+
+
+</section>
+
+{% endblock %} 
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+{% endblock %}
+
+
+
+

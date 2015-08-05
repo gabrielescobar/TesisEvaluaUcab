@@ -1,0 +1,49 @@
+security:
+    firewalls:
+        secured_area:
+            pattern: ^/
+            anonymous: ~
+            form_login:
+                login_path: login
+                check_path: login_check
+                #Luego del login siempre va a esta pagina
+                default_target_path: /home 
+            logout:
+                path: logout
+                target: /login
+                
+            remember_me:
+                key: evaluaUcab123
+                lifetime: 3600
+   #Control de acceso de las URL
+    access_control:
+        - { path: /home, roles: [ROLE_ESTUDIANTE,ROLE_PROFESOR,ROLE_ADMIN] }
+        - { path: /estudiante, roles: [ROLE_ESTUDIANTE]}
+        - { path: /admin, roles:[ROLE_ADMIN]}
+        - { path: /profesor, roles:[ROLE_PROFESOR]}
+    
+    #Proveedores de usuario    
+    providers:
+       # Se define la cadena de busqueda, primero busca en estudiantes, luego en profesores y posteriormente en memoria
+        chain_provider:
+            chain:
+                providers: [estudiantes,profesores,administradores]
+        #Usuarios de la tabla Estudiante
+        estudiantes:
+            entity: { class: evaluaUcab\EstudianteBundle\Entity\Estudiante, property: correo }
+        #Usuarios de la tabla Profesor
+        profesores:
+            entity: { class: evaluaUcab\ProfesorBundle\Entity\Profesor, property: correo }
+        
+        administradores:
+            memory:
+                users:
+                    admin: { password: admin, roles: 'ROLE_ADMIN' }
+                   
+    encoders: 
+        Symfony\Component\Security\Core\User\User: plaintext
+        evaluaUcab\EstudianteBundle\Entity\Estudiante:  { algorithm: sha512, iterations: 10 }
+        evaluaUcab\ProfesorBundle\Entity\Profesor: { algorithm: sha512, iterations: 10 }
+        
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_ESTUDIANTE, ROLE_PROFESOR, ROLE_ALLOWED_TO_SWITCH]

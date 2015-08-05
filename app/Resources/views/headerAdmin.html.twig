@@ -1,0 +1,33 @@
+<header> 
+    <a href="{{path('inicio')}}" > <img id="logo" src="{{asset('bundles/application/images/logoHeader.png')}}"/> </a>
+
+ <div id="topBar" style="">
+        <div id="nombre">
+            Administrador
+         </div>   
+       <div id="foto" >
+          <img style="width: 60px; height: 60px;" id="imagen" src="{{asset('images/defaultPerfil.png')}}" />          
+        </div>
+          <div id="botones" style="" >
+                 <a href="#"> <img src="{{asset('bundles/application/images/ayuda.png')}}"  /></a>    
+                 <a data-toggle="modal" data-target="#myModal"><img src="{{asset('bundles/application/images/salir.png')}}"  /></a>
+         </div>
+      </div>
+</header>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" id="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <span class="spanCerrarSesion">¿Cerrar sesión?</span>
+            </div>
+            <div class="modal-footer">
+                <a id="noClose" data-dismiss="modal" > No</a>
+                <a id="yesClose" href="{{ path('logout') }}">Si</a>
+            </div>
+        </div>
+    </div>
+</div>

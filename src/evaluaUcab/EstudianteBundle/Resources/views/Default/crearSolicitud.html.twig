@@ -1,0 +1,99 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = false %}
+{% block title %}Solicitar Acceso{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolio.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/crearSolicitud.css') }}" rel="stylesheet" type="text/css" />
+
+{% endblock %}
+
+
+{% block body %}
+
+{% include '::header.html.twig' %}
+{% include 'EstudianteBundle:Default:navEstudiante.html.twig' %}
+
+{% for flashMessage in app.session.flashbag.get('warning') %}
+    <div id="myAlert" class="alert alert-danger alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>{{ flashMessage }}</strong> 
+    </div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+    <div id="myAlert" class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>{{ flashMessage }}</strong> 
+    </div>
+{% endfor %}
+
+<section id="seccionCrearSeccion">
+    <h2>Crear Solicitud de Acceso</h2>
+    <hr>
+    <form action="{{ path('registrar_acceso') }}" method="post" >
+
+        <span>Materia:</span> 
+        <select id="form_materia" name="form_materia" class="margen" required> 
+          {{ render(controller('ProfesorBundle:Materia:renderMaterias')) }}
+        </select><br>
+        
+        <span>Sección:</span>
+        <select id="form_seccion" name="form_seccion" class="margen" required> </select>  <br>
+  
+        <br>     
+
+        <button id="boton" type="submit" class="btn btn-success" >Solicitar</button>
+       
+    </form>
+
+
+</section>
+
+
+
+{% endblock %} 
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+<script type="text/javascript">
+
+    $("#form_materia").change(function() {
+         console.log("entre");
+          var $selector = $('#form_seccion');
+          $selector.empty();
+            var data = {
+            materia_id: $(this).val()
+           };
+           console.log(data);
+            $.ajax({
+             type: 'post',
+             url: '{{ path("select_seccion") }}',   
+             dataType: 'json',
+             data: data,
+             success: function(data) {
+             console.log(data);        
+                    
+              for (var i in data) {
+                $selector.append('<option value="' + data[i].id + '">'+data[i].codigo+  '</option>');
+             }
+           }
+         });
+       });
+
+    </script>
+
+{% endblock %}
+
+
+
+

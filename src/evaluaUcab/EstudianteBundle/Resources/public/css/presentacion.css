@@ -1,0 +1,23 @@
+/* 
+    Document   : presentacion
+    Created on : 16-oct-2014, 23:31:46
+    Author     : Legna Filloy
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+@font-face {
+    font-family: 'DKCrayon';
+    src: url('../fonts/DKCrayonCrumble.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h2{
+    font-family: "DKCrayon"; 
+    margin-left: 0.2em;
+    margin-top: 1.8em;
+    font-weight: bold;
+    margin-bottom: 1.5em;
+}
+

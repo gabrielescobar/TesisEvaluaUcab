@@ -1,0 +1,107 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = true %}
+{% block title %}Editar Preguntas{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/examenes.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/alertCustomize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioProfesor.css') }}" rel="stylesheet" type="text/css" />
+
+
+{% endblock %}
+
+{% block body %}
+
+{% include '::header.html.twig' %}
+{% include 'ProfesorBundle:Default:navProfesor.html.twig' %}
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+<div id="myAlert" class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+    <strong>{{ flashMessage }}</strong> 
+</div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('warning') %}
+<div  id="myAlert" class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+    <strong>{{ flashMessage }}</strong> 
+</div>
+{% endfor %}
+
+<form method="link" action=" {{path('respuestas', {'idExamen': pregunta.examen.id,'idPregunta':pregunta.id})}} " > 
+   <button id ="bAddRespuesta" type="submit" class="btn btn-danger" >Añadir Respuesta </button>
+</form>
+
+<section id="recuadroEditPrevRespuestas"> 
+ <h2>Editar Respuestas</h2>
+ <hr style=" margin-left: -2em;width: 59.8em;border: 0; height: 5px; box-shadow: inset 0 12px 12px -12px #1ea3e1;">
+  
+ <span id="pregunta" style="visibility: hidden"> {{pregunta.titulo}} </span> <p>({{pregunta.calificacion}}pts)</p>
+ <span>Respuestas(as): </span> <br><br>
+    
+    {% for respuesta in pregunta.respuestas %}
+{# ... #}
+        <li style="margin-left: 3em; text-decoration: none; list-style: none"> <a  title="Ver"  href="{{ path('editar_respuesta',{'idRespuesta':respuesta.id}) }}" ><span style="visibility:hidden">{{respuesta.contenido}}</span>   </a>   
+      
+         <a title="Eliminar respuesta" style="float:right; margin-right: 2em;" onclick="alertDGC('Eliminar Respuesta','prompt','deleteRespuesta','0',{{pregunta.id}},{{respuesta.id}});" > <img id="logo" src="{{asset('bundles/application/images/trash.png')}}"/> </a>
+      {%if respuesta.validacion == 1 %}
+         <img title="Respuesta Incorrecta" style="float:right;" id="logo" src="{{asset('bundles/application/images/correcto.png')}}"/> 
+        <p style="float:right;"> ({{respuesta.puntaje}}pts)</p>
+       {%else%}
+         <img title="Respuesta Correcta" style="float:right;" id="logo" src="{{asset('bundles/application/images/incorrecto.png')}}"/>  
+        <p style="float:right;">  ({{respuesta.puntaje}}pts) </p>
+      {%endif%}
+        </li><br>
+    
+   {% endfor %}
+    <form method="link" action=" {{path('editar_pregunta',{'idPregunta':pregunta.id})}} " > 
+    <button id="bFinP" type="submit" class="btn btn-info" >Regresar</button>
+</form>
+</section>
+
+
+
+
+
+
+{% endblock %} 
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+<script src="{{ asset('bundles/profesor/js/dialogo.js') }}"></script>
+<script src="{{ asset('bundles/profesor/js/respuestaFunctions.js') }}"></script>
+<script> 
+
+    $(document).ready(function(){
+        
+      var p = $("#pregunta").text();
+      $("#pregunta").html(p);
+      $("#pregunta").css("visibility", "visible");
+      
+      var valor;
+       $("#recuadroEditPrevRespuestas li span").each(function(){
+          valor= $(this).text();
+          $(this).html(valor);
+          $(this).css("visibility", "visible");
+          //alert(valor);
+           
+       });          
+});
+
+</script>
+
+
+{% endblock %}
+

@@ -1,0 +1,91 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = true %}
+{% block title %}Editar{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioProfesor.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/portafolioProfesor.css')}}" rel="stylesheet" type="text/css"/>
+
+{% endblock %}
+
+
+{% block body %}
+
+{% include '::header.html.twig' %}
+{% include 'ProfesorBundle:Default:navProfesor.html.twig' %}
+{% include 'ProfesorBundle:Default:menuPortafolioProfesor.html.twig' %}
+
+{% for flashMessage in app.session.flashbag.get('warning') %}
+<div id="myAlert" class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+    <strong>{{ flashMessage }}</strong> 
+</div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+<div id="myAlert" class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+    <strong>{{ flashMessage }}</strong> 
+</div>
+{% endfor %}
+
+
+<section id="contenidoPortafolio">
+
+
+    <h2>Editar </h2>
+    <hr style="margin-left: -2em; width: 67.8em; border: 0; height: 5px; box-shadow: inset 0 12px 12px -12px #1ea3e1;">
+
+    <form action="{{ path('editar_examen_portafolio',{'idExamenPortafolio':examenPortafolio.id}) }}" method="post" >
+
+        <span class="span">Tipo:</span>
+        <select id="form_tipo" name="form_tipo" tittle="Tipo" required>  
+            <option value="" diabled selected>Seleccione </option>
+            {%if examenPortafolio.tipo == 0%}
+            <option value="1">Grupal </option>
+            <option value="0" selected>Individual </option>
+            {%else%}          
+            <option value="1" selected>Grupal </option>
+            <option value="0" >Individual </option>
+            {%endif%}
+
+        </select>  
+
+        <br> <span class="span">Fecha de cierre:</span> 
+        <input id="form_fechaCierre" class="margen grosor2" value="{{examenPortafolio.fechaCierre |date("Y-m-d") }}" name="form_fechaCierre" type="date" min="{{ "now"|date("Y-m-d") }}" max="{{ portafolio.fechaCierre|date_modify("-1 day")|date("Y-m-d") }}" class="fecha" required > <br>
+        <span class="span">Hora de cierre:</span>  
+        <input id="form_horaCierre"  class="margen grosor" value="{{examenPortafolio.horaCierre |date("H:m:s")}}" name="form_horaCierre" type="time" required > <br>
+       
+        <span class="span">Duración:</span>  
+        <input id="form_duracion" class="margen grosor" value="{{examenPortafolio.duracion |date("H:m:s")}}" name="form_duracion" type="time" required > <br><br>
+        <button style="margin-left: 14em;" type="submit" class="btn btn-success" >Guardar</button>
+
+    </form>
+
+   
+
+</section>
+
+
+
+
+
+{% endblock %} 
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+<script src="{{ asset('bundles/profesor/js/importarExamen.js') }}"></script>
+{% endblock %}
+
+
+
+

@@ -1,0 +1,45 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = false %}
+{% block title %}Calendario{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/calendario.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioEstudiante.css') }}" rel="stylesheet" type="text/css" />
+
+
+{% endblock %}
+
+{% block body %}
+
+
+{% include '::header.html.twig' %}
+{% include 'EstudianteBundle:Default:navEstudiante.html.twig' %}
+
+<section style="margin-left: 6em; margin-top: 3em; " id="seccionDiarios">
+    <h2>Calendario</h2>
+    {%if isProfesor == false%}
+       {% set val = 0 %}
+    {%else%}
+        {% set val = 1 %}
+    {%endif%}
+   <iframe style="border:none; width: 78em; height: 62em; "  src="{{ asset('bootstrap-calendar-master/index.html?id=' ~ app.user.id ~'' ~'&val='~val ) }}"></iframe>  
+    
+
+</section>
+
+{% endblock %} 
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+{% endblock %}
+
+
+
+

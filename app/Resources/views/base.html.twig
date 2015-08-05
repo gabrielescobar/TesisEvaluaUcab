@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+ 
+        <meta> {% block meta %}{% endblock %} <meta/>
+        <title>{% block title %}{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+            
+            
+        {% block javascripts %}           
+         <script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+         <script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+         
+         {#No borrar ! rutas para el FOSRouting #}
+         <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+         <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+        {% endblock %}
+    </body>
+    
+<footer> Evalúa UCAB 2015. Universidad Católica Andrés Bello</footer>
+</html>
+
+
+

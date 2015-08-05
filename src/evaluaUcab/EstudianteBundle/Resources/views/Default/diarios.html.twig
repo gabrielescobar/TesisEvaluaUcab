@@ -1,0 +1,90 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = false %}
+{% block title %}Diarios{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/diarios.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/alertCustomize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolio.css') }}" rel="stylesheet" type="text/css" />
+
+
+{% endblock %}
+
+{% block body %}
+
+{% include '::header.html.twig' %}
+{% include 'EstudianteBundle:Default:navEstudiante.html.twig' %}
+{% include 'EstudianteBundle:Default:menuPortafolio.html.twig' %}
+
+ <div id="dialog" style="visibility: hidden;  position: absolute; top:6.4em;  right: 4em;" class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>¡Nota Eliminada!</strong> 
+    </div>
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+    <div id="myAlert" class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>{{ flashMessage }}</strong> 
+    </div>
+{% endfor %}
+
+  
+<section id="contenidoPortafolio" >
+
+<form method="link" action=" {{path('crear_diario',{'idPortafolio':seccion.portafolio.id})}} " > 
+   <button id ="bCrearDiario" type="submit" class="btn btn-danger" >Crear nota </button>
+ </form>
+  
+    <h2>Mi Diario </h2>
+    <hr style="border: 0; height: 5px; box-shadow: inset 0 12px 12px -12px #1ea3e1;">
+
+ <ul id="listaDiarios">
+{% for diario in diarios %}
+{# ... #}
+         <li>{{diario.titulo}}  </a>
+     <a title="Eliminar" style="float:right; margin-right: 2em;"  onclick="alertDGC('Eliminar nota','prompt','deleteDiario',{{seccion.portafolio.id}},{{diario.id}},0)" > <img id="logo" src="{{asset('bundles/application/images/trash.png')}}"/> </a>
+     <a title="Editar" style="float:right;" href="{{path('editar_diario', {'idPortafolio':seccion.portafolio.id,'idDiario': diario.id})}}" > <img id="logo" src="{{asset('bundles/application/images/edicionIcon.png')}}"/> </a>
+     <span style="float:right" title="Última modificación">{{diario.fechaModificacion | date('d/m/Y')}}</span>
+  </li>
+  <hr style="margin-left: -2.8em">
+{% endfor %}
+ 
+ </ul>
+   
+    <div id="pagMaterias" class="navigation">
+      {{ knp_pagination_render(diarios) }}
+    </div>
+    
+    
+
+
+</section>
+
+
+
+{% endblock %} 
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+<script src="{{ asset('bundles/profesor/js/dialogo.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/diarioFunctions.js') }}"></script>
+
+
+
+
+{% endblock %}
+
+
+
+

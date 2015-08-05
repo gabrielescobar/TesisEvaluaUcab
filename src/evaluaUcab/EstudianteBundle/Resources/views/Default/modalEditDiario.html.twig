@@ -1,0 +1,61 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = false %}
+{% block title %}Diarios{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/crearDiario.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioEstudiante.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolio.css') }}" rel="stylesheet" type="text/css" />
+
+{% endblock %}
+
+
+{% block body %}
+{% include '::header.html.twig' %}
+{% include 'EstudianteBundle:Default:navEstudiante.html.twig' %}
+{% include 'EstudianteBundle:Default:menuPortafolio.html.twig' %}
+
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+    <div id="myAlert" class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>{{ flashMessage }}</strong> 
+    </div>
+{% endfor %}
+
+
+<section id="contenidoPortafolio" class="margin">
+    <h2> Editar Diario </h2> 
+  <form action="{{ path('diario_update', { 'idPortafolio':seccion.portafolio.id,'idDiario': diario.id }) }}" method="post" >
+      
+       {{ form_widget(edit_form.titulo,{ 'attr': {'placeholder': 'Título', 'title':'Título del diario', 'class':'inputTitulo'}}) }}
+       {{ form_errors(edit_form.titulo) }}   
+       {{ form_widget(edit_form.descripcion) }}
+       {{ form_errors(edit_form.descripcion) }}
+      <br>     
+     
+         <button style="margin-top: 2em; margin-left: 24em; margin-bottom: 3em" type="submit" class="btn btn-success" >Guardar</button>
+          {{ form_rest(edit_form) }}
+    </form>
+    <form action="{{ path('diarios',{'idPortafolio':seccion.portafolio.id}) }}" method="post" >     
+       <button style="margin-top: -7em; margin-left: 30em; margin-bottom: 3em" id="bCancelar" type="submit" class="btn btn-info" >Regresar</button>
+    </form>    
+</section>
+
+{% endblock %} 
+
+
+
+{% block javascripts %}
+    <script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+    <script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+{% endblock %}
+
+
+
+

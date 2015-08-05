@@ -1,0 +1,122 @@
+<?php
+
+namespace evaluaUcab\ProfesorBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Examen
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class Examen {
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="titulo", type="string", length=255)
+     */
+    private $titulo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descripcion", type="text")
+     */
+    private $descripcion;
+
+    /**
+     * @ORM\OneToMany(targetEntity="evaluaUcab\ProfesorBundle\Entity\Pregunta", mappedBy="examen")
+     * */
+    private $preguntas;
+    
+    /**
+     * @var integer 
+     * 
+     * @ORM\Column(name="puntaje", type="integer")
+     */
+    
+    private $puntaje;
+    
+
+    public function __construct() {
+        $this->preguntas = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId() {
+        return $this->id;
+    }
+    
+    
+    public function getPuntaje() {
+        return $this->puntaje;
+    }
+
+    public function setPuntaje($puntaje) {
+        $this->puntaje = $puntaje;
+    }
+
+        /**
+     * Set titulo
+     *
+     * @param string $titulo
+     * @return Examen
+     */
+    public function setTitulo($titulo) {
+        $this->titulo = $titulo;
+
+        return $this;
+    }
+
+    /**
+     * Get titulo
+     *
+     * @return string 
+     */
+    public function getTitulo() {
+        return $this->titulo;
+    }
+
+    /**
+     * Set descripcion
+     *
+     * @param string $descripcion
+     * @return Examen
+     */
+    public function setDescripcion($descripcion) {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcion
+     *
+     * @return string 
+     */
+    public function getDescripcion() {
+        return $this->descripcion;
+    }
+    
+    public function getPreguntas() {
+        return $this->preguntas;
+    }
+
+
+
+}

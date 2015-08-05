@@ -1,0 +1,90 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = false %}
+{% set var = app.user%}
+{% block title %}Editar Perfil{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioEstudiante.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/editarEstudiante.css') }}" rel="stylesheet" type="text/css" />
+
+
+{% endblock %}
+
+
+{% block body %}
+
+{% include '::header.html.twig' %}
+{% include 'EstudianteBundle:Default:navEstudiante.html.twig' %}
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+    <div id="myAlert" class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>{{ flashMessage }}</strong> 
+    </div>
+{% endfor %}
+<section id="recuadro">
+
+    <h2> Editar Perfil </h2>
+    <hr>
+<form action="{{ path('estudiante_update', { 'id': estudiante.id }) }}"onSubmit="return validate();"  method="post" {{ form_enctype(edit_form) }}>
+       
+       {{ form_widget(edit_form.nombre,{ 'attr': {'placeholder': 'Nombre(es)', 'class':'lista', 'title':'Ej: Ana María','pattern':'([a-zA-Z]| |)+' } }) }} 
+       {{ form_errors(edit_form.nombre) }}   
+       {{ form_widget(edit_form.apellido,{ 'attr': { 'placeholder': 'Apellidos', 'class':'lista', 'title':'Ej: Pérez López','pattern':'([a-zA-Z]| |)+' } }) }} 
+       {{ form_errors(edit_form.apellido) }}
+       {{ form_widget(edit_form.fechaNacimiento, { 'attr': {'class':'lista', 'title':'Ej: 20/01/1989' } }) }} 
+       {{ form_errors(edit_form.fechaNacimiento) }}
+       {{ form_widget(edit_form.correo, { 'attr': { 'placeholder': 'E-mail', 'class':'lista', 'title':'Ej: email@ejemplo.com','pattern':'[a-zA-Z0-9.+_-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+' } }) }} 
+       {{ form_errors(edit_form.correo) }}
+       {{ form_widget(edit_form.password, { 'attr': { 'disabled':'true','placeholder': 'Contraseña', 'class':'lista', 'title':'Ej: abc123'} }) }} 
+       {{ form_errors(edit_form.password) }}
+        {{ form_widget(edit_form.cedula, { 'attr': {'placeholder': 'Cédula', 'class':'lista', 'title':'Ej: 11111111','pattern':'[0-9]+' } }) }}
+       {{ form_errors(edit_form.cedula) }}
+  
+       <div id="cargarFoto" name="div" class="fileUpload btn btn-warning" style="margin-left: -20.3em; margin-top: -10em">
+            <span> Cargar Foto</span>
+            {{ form_widget(edit_form.file, { 'attr': { 'class':'upload'} }) }}       
+        </div>
+         {{ form_errors(edit_form.file) }}
+        <br>     
+        <input type="submit" value="Guardar Cambios" class="btn btn btn-success" style="margin-left: 10em; margin-top: -5em;" />
+           {{ form_rest(edit_form) }}
+    </form>
+
+        <form method="link" action=" {{path('inicio')}} " > 
+            <button type="submit" class="btn btn-info" style="margin-left: 21em; margin-top: -8em" >Finalizar </button>
+ </form>
+ </section>
+
+{% endblock %} 
+
+
+{% block javascripts %}
+
+    <script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+    <script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+ <script src="{{ asset('bundles/estudiante/js/validate.js') }}"></script>  
+  <script >
+  
+$("#evaluaUcab_estudiantebundle_estudiantetype_cedula").css('visibility','hidden');
+$("#evaluaUcab_estudiantebundle_estudiantetype_correo").css('visibility','hidden');
+$("#evaluaUcab_estudiantebundle_estudiantetype_password").css('visibility','hidden');
+  
+  
+  
+  
+  
+  
+  </script>  
+{% endblock %}
+
+
+
+
+
+

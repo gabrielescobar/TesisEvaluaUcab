@@ -1,0 +1,93 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = true %}
+{% block title %}View Grupos{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioProfesor.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/portafolioProfesor.css')}}" rel="stylesheet" type="text/css"/>
+<link href="{{ asset('bundles/profesor/css/alertCustomize.css') }}" rel="stylesheet" type="text/css" />
+
+{% endblock %}
+
+
+{% block body %}
+
+{% include '::header.html.twig' %}
+{% include 'ProfesorBundle:Default:navProfesor.html.twig' %}
+{% include 'ProfesorBundle:Default:menuPortafolioProfesor.html.twig' %}
+
+{% for flashMessage in app.session.flashbag.get('warning') %}
+<div id="myAlert" class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+    <strong>{{ flashMessage }}</strong> 
+</div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+<div id="myAlert" class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+    <strong>{{ flashMessage }}</strong> 
+</div>
+{% endfor %}
+
+ <div id="dialog" style="visibility: hidden;  position: absolute; top:6.4em;  right: 4em;" class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>¡Grupo Eliminado!</strong> 
+</div>
+
+ <div id="dialog2" style="visibility: hidden;  position: absolute; top:6.4em;  right: 4em;" class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>¡Grupo Editado!</strong> 
+</div>
+    
+<section id="contenidoPortafolio">
+ 
+ <form method="link" action="{{ path('form_grupo',{'idSeccion': portafolio.seccion.id}) }}" > 
+   <button style="margin-top: 2em" type="submit" class="btn btn-danger" >Crear Grupo</button>
+ </form>
+    <h2>Grupos </h2>
+    <hr style="margin-left: -2em; width: 67.8em; border: 0; height: 5px; box-shadow: inset 0 12px 12px -12px #1ea3e1;">
+    
+    <ol>  
+  {% for grupo in pagination %}
+{# ... #}
+   <li style="margin-left: 3em;"><a title="Ver Portafolio" href="{{ path('portafolio_grupo_ver',{'idPortafolio':portafolio.id,'idGrupo':grupo.id}) }}" > {{grupo.nombre}} </a>
+   <a title="Eliminar" style="float:right; margin-right: 2em;"  onclick="alertDGC('Eliminar grupo','prompt','deleteGrupo',{{grupo.id}} ,{{portafolio.id}},0)" > <img id="logo" src="{{asset('bundles/application/images/trash.png')}}"/> </a>
+   <a title="Editar" style="float:right; " href="{{path('editar_grupo',{'idPortafolio':portafolio.id, 'idGrupo':grupo.id})}}" > <img id="logo" src="{{asset('bundles/application/images/edicionIcon.png')}}"/> </a>
+      
+                                                                                    
+    </li>
+    <hr style="margin-left: -2.8em">
+   {% endfor %}
+     <div id="pag" class="navigation">
+      {{ knp_pagination_render(pagination) }}
+    </div>  
+              
+ </ol>
+
+</section>
+
+{% endblock %} 
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+<script src="{{ asset('bundles/profesor/js/dialogo.js') }}"></script>
+<script src="{{ asset('bundles/profesor/js/grupoFunctions.js') }}"></script>
+{% endblock %}
+
+
+
+

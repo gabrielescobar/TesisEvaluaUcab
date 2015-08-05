@@ -1,0 +1,43 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = true %}
+{% block title %}Calendario{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/calendario.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioProfesor.css') }}" rel="stylesheet" type="text/css" />
+
+
+{% endblock %}
+
+{% block body %}
+
+
+{% include '::header.html.twig' %}
+{% include 'ProfesorBundle:Default:navProfesor.html.twig' %}
+
+<section style="margin-left: 6em; margin-top: 3em; " id="seccionDiarios">
+   <form method="link" action="{{path('ver_portafolio_profesor',{'idSeccion':seccion.id})}}" > 
+   <button id="bCrearExamen" type="submit" class="btn btn-danger" >Regresar</button>
+ </form> <h2>Calendario: {{seccion.materia.nombre}}-{{seccion.codigo}}</h2>
+    {%if isProfesor == false%}
+       {% set val = 0 %}
+    {%else%}
+        {% set val = 1 %}
+    {%endif%}
+   <iframe style="border:none; width: 78em; height: 62em; "  src="{{ asset('bootstrap-calendar-master/index.html?id=' ~ seccion.id ~'' ~'&val='~val ) }}"></iframe>  
+    
+
+</section>
+
+{% endblock %} 
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+{% endblock %}

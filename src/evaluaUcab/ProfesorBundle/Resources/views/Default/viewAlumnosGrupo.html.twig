@@ -1,0 +1,55 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = true %}
+{% block title %}Alumnos en grupo{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioProfesor.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/portafolioProfesor.css')}}" rel="stylesheet" type="text/css"/>
+
+{% endblock %}
+
+
+{% block body %}
+
+{% include '::header.html.twig' %}
+{% include 'ProfesorBundle:Default:navProfesor.html.twig' %}
+{% include 'ProfesorBundle:Default:menuPortafolioProfesor.html.twig' %}
+    
+<section id="contenidoPortafolio">
+ 
+
+    <h2>Alumnos en el Grupo</h2>
+    <hr style="margin-left: -2em; width: 67.8em; border: 0; height: 5px; box-shadow: inset 0 12px 12px -12px #1ea3e1;">
+    
+    <ul>  
+  {% for estudiante in estudiantes %}
+{# ... #}
+  <li style="margin-left: 1em;"> {{estudiante.apellido}} {{estudiante.nombre}}</li>
+    <hr style="margin-left: -2.8em">
+   {% endfor %}
+                
+ </ul>
+    
+ <form action="{{ path('grupos', {'idPortafolio': portafolio.id}) }}" method="post" >
+     <button style="margin-left: 27em;" id="bFinRespuesta" type="submit" class="btn btn-info" >Regresar</button>
+ </form>
+
+</section>
+
+{% endblock %} 
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+
+{% endblock %}
+
+
+
+

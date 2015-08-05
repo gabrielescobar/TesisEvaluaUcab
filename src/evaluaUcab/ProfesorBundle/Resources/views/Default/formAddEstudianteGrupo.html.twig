@@ -1,0 +1,61 @@
+{# empty Twig template #}
+{% extends '::base.html.twig'%}
+{% set isProfesor = true %}
+{% block title %}View Grupos{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolioProfesor.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/portafolioProfesor.css')}}" rel="stylesheet" type="text/css"/>
+
+{% endblock %}
+
+
+{% block body %}
+
+{% include '::header.html.twig' %}
+{% include 'ProfesorBundle:Default:navProfesor.html.twig' %}
+{% include 'ProfesorBundle:Default:menuPortafolioProfesor.html.twig' %}
+
+{% for flashMessage in app.session.flashbag.get('warning') %}
+<div id="myAlert" class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+    <strong>{{ flashMessage }}</strong> 
+</div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+<div id="myAlert" class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+    <strong>{{ flashMessage }}</strong> 
+</div>
+{% endfor %}
+    
+<section id="contenidoPortafolio">
+ <h2>Agregar Estudiantes </h2>
+    <hr style="border: 0; height: 5px; box-shadow: inset 0 12px 12px -12px #1ea3e1; margin-left: -2em; margin-right: -2em">
+    <span> Estudiantes sin grupo: </span><br><br>
+    <form action="{{ path('agregar_estudiante_grupo',{'idSeccion':portafolio.seccion.id, 'idGrupo': idGrupo}) }}" method="post" >
+   
+    {% for estudiante in estudiantes %}
+       <input type="checkbox" style="margin-left: 3em;" name="estudianteGrupo[]" value="{{estudiante.id}}" />{{estudiante.nombre}} {{estudiante.apellido}} <br>
+    {% endfor %}
+ 
+        <button id="" type="submit" style="margin-left: 28em; " class="btn btn-success" >Guardar</button>
+        
+    </form>
+</section>
+
+{% endblock %} 
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+<script src="{{ asset('bundles/profesor/js/importarExamen.js') }}"></script>
+{% endblock %}

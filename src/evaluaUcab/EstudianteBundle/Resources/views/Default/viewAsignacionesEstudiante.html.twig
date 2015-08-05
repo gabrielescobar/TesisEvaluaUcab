@@ -1,0 +1,197 @@
+{% extends '::base.html.twig'%}
+{% set isProfesor = false %}
+
+{%block meta%}<meta name="asignacion"> </meta> {%endblock%}
+{% block title %}Asignaciones{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolio.css') }}" rel="stylesheet" type="text/css" />
+
+{% endblock %}
+
+{% block body %}
+  {#archivo que está en app/Resources, carga el header de la página#}
+{% include '::header.html.twig' %}
+
+{% include 'EstudianteBundle:Default:navEstudiante.html.twig' %}
+{% include 'EstudianteBundle:Default:menuPortafolio.html.twig' %}
+
+{% for flashMessage in app.session.flashbag.get('warning') %}
+    <div id="myAlert" class="alert alert-danger alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>{{ flashMessage }}</strong> 
+    </div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+    <div id="myAlert" class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>{{ flashMessage }}</strong> 
+    </div>
+{% endfor %}
+
+<section id="contenidoPortafolio">
+    <h2>Asignaciones</h2>
+    <hr style=" margin-left: -2em;width: 67.8em;border: 0; height: 5px; box-shadow: inset 0 12px 12px -12px #1ea3e1;">
+     
+    
+    <div role="tabpanel" style="width: 67.7em; margin-left: -2em">
+     <!-- Nav tabs -->
+       <ul class="nav nav-tabs" role="tablist">
+         <li role="presentation" class="active"><a href="#autoevaluacion" aria-controls="autoevaluacion" role="tab" data-toggle="tab">Autoevaluaciones</a></li>
+         <li role="presentation"><a href="#coevaluacion" aria-controls="coevaluacion" role="tab" data-toggle="tab">Coevaluaciones</a></li>
+         <li role="presentation" ><a href="#mapasmentales" aria-controls="mapasmentales" role="tab" data-toggle="tab">Mapas Mentales</a></li>
+         <li role="presentation"><a href="#presentaciones" aria-controls="presentaciones" role="tab" data-toggle="tab">Presentaciones</a></li>
+            </ul>
+
+     <!-- Tab panes -->
+       <div class="tab-content">
+         <div role="tabpanel" class="tab-pane" id="mapasmentales" style="padding: 1em">
+             <ol>
+               
+               {% for mapaMental in mapasMentales %}
+                 
+                 {% if date(mapaMental.fechaCierre).timestamp() < date().timestamp() %}
+                            {# se cerro la evaluacion, el mapa se muestra en modo "ver"#}
+                       {%if mapaMental.modoPresentacion == 0%} {#Asignacion individual#}             
+                          <li> <a target="_blank" href="{{asset('MapaMental_vista/index.html?idestudiante='~app.user.id~'' 
+                             ~'&estsecc='~estudianteSeccion~'&estgrupo=null&idasignacion='~mapaMental.id~
+                             '&idmapa='~mapaMental.mapaMental.id~'&idlista=0'~'&idgrupo=null'~
+                             '&idrubrica=0'~'&tipo='~0~'')}}" > {{mapaMental.titulo}} </a>
+                          <img title="Asignación Individual" id="logo" src="{{asset('bundles/application/images/individual.png')}}"/>
+                          <span style="float:right">Fecha de cierre:
+                         {{ mapaMental.fechaCierre|date('d/m/Y H:i', timezone="America/Caracas") }}</span></li> <br>             
+                       {% else %} {#Asignacion grupal#}
+                              
+                            <li> <a target="_blank" href="{{asset('MapaMental_vista/index.html?idestudiante='~app.user.id~'' 
+                             ~'&estsecc=null'~'&estgrupo='~estudianteGrupo~'&idasignacion='~mapaMental.id~
+                             '&idmapa=0'~'&idlista=0'~'&idgrupo='~grupo.id~
+                             '&idrubrica=0'~'&tipo='~0~'')}}" > {{mapaMental.titulo}}</a>
+                             <img title="Asignación Grupal" id="logo" src="{{asset('bundles/application/images/mixto.png')}}"/>
+                             <span style="float:right">Fecha de cierre:
+                            {{ mapaMental.fechaCierre|date('d/m/Y H:i', timezone="America/Caracas") }} 
+                        </span></li><br>
+                       {% endif %}
+                 {%else%}
+                       {%if mapaMental.modoPresentacion == 0%}
+                          <li> <a title="Ver" target="_blank"
+                          href="{{asset('MapaMental/index.html?idestudiante=' ~ app.user.id ~'' 
+                       ~'&estsecc='~estudianteSeccion~'&estgrupo=null'~'&idgrupo=null'~'&idasignacion='~mapaMental.id~'&idmapa=0'~'&portafolio='~seccion.portafolio.id~'')}}" >
+                         {{mapaMental.titulo}} </a> 
+                        <img title="Asignación Individual" id="logo" src="{{asset('bundles/application/images/individual.png')}}"/>
+                        <span style="float:right">Fecha de cierre:
+                        {{ mapaMental.fechaCierre|date('d/m/Y H:i', timezone="America/Caracas") }} </span>      
+                        </li><br>
+                      {%else%} {#Asignacion grupal#}
+                        <li > <a title="Ver" target="_blank"
+                        href="{{asset('MapaMental/index.html?idestudiante=' ~ app.user.id ~''
+                        ~'&estsecc=null&estgrupo='~estudianteGrupo~'&idgrupo='~grupo.id~'&idasignacion='~mapaMental.id~'&idmapa=0')}}" >
+                        {{mapaMental.titulo}} </a>   
+                        <img title="Asignación Grupal" id="logo" src="{{asset('bundles/application/images/mixto.png')}}"/>
+                        <span style="float:right">Fecha de cierre:
+                         {{ mapaMental.fechaCierre|date('d/m/Y H:i', timezone="America/Caracas") }} 
+                        </span>     
+                      </li><br>
+                     {%endif%}
+               {%endif%}    
+        {% endfor %}
+         <ol>
+                  
+         </div>
+         <div role="tabpanel" class="tab-pane" id="presentaciones" style="padding: 1em">
+                <ol>
+                {% for presentacion in presentaciones %}
+                    <li> <a title="Ver" href="#" >
+                        {{presentacion.titulo}}  </a>
+                         {%if presentacion.modoPresentacion == 0%}
+                           <img title="Asignación Individual" id="logo" src="{{asset('bundles/application/images/individual.png')}}"/>
+                         {%else%}
+                          <img title="Asignación Grupal" id="logo" src="{{asset('bundles/application/images/mixto.png')}}"/>
+                         {%endif%} 
+                     <span style="float:right">Fecha de cierre:
+                         {{ presentacion.fechaCierre|date('d/m/Y', timezone="America/Caracas") }} </span>       
+                  </li><br>
+                
+              {% endfor %}
+              </ol>
+         </div>
+         <div role="tabpanel" class="tab-pane active" id="autoevaluacion" style="padding: 1em">
+           
+                <ol>
+                 {% for autoevaluacion in autoevaluaciones %}
+                 
+                    <li > <a title="Ver" href="#" >
+                        {{autoevaluacion.titulo}}  </a>
+                         {%if autoevaluacion.modoPresentacion == 0%}
+                           <img title="Asignación Individual" id="logo" src="{{asset('bundles/application/images/individual.png')}}"/>
+                         {%else%}
+                          <img title="Asignación Grupal" id="logo" src="{{asset('bundles/application/images/mixto.png')}}"/>
+                         {%endif%} 
+                     <span style="float:right">Fecha de cierre:
+                         {{ autoevaluacion.fechaCierre|date('d/m/Y H:i', timezone="America/Caracas") }}</span>       
+                  </li><br>
+             
+               {% endfor %}   
+              </ol>
+         </div>
+         <div role="tabpanel" class="tab-pane" id="coevaluacion" style="padding: 1em">
+         
+         <ol>
+         {% for coevaluacion in coevaluaciones %}
+                 
+                    <li> <a title="Ver" href="#" >
+                        {{coevaluacion.titulo}} </a>
+                         {%if coevaluacion.modoPresentacion == 0%}
+                           <img title="Asignación Individual" id="logo" src="{{asset('bundles/application/images/individual.png')}}"/>
+                         {%else%}
+                          <img title="Asignación Grupal" id="logo" src="{{asset('bundles/application/images/mixto.png')}}"/>
+                         {%endif%} 
+                     <span style="float:right">Fecha de cierre:
+                         {{ coevaluacion.fechaCierre|date('d/m/Y H:i', timezone="America/Caracas") }}</span>       
+                  </li><br>
+            
+          {% endfor %}
+         </ol>
+         </div>
+       </div>
+
+  </div>
+    
+    
+    
+    
+{#{% for registro in examenPortafolio %}
+... 
+    <ol>
+      <li style="margin-left: 3em;"> <a title="Ver" href="{{ path('ver_examen_estudiante',{'idExamenPortafolio':registro.id}) }}" >
+        {{registro.examen.titulo}}  
+              {%if registro.tipo == 0%}
+                 <img title="Asignación Individual" id="logo" src="{{asset('bundles/application/images/individual.png')}}"/>
+              {%else%}
+                 <img title="Asignación Grupal" id="logo" src="{{asset('bundles/application/images/mixto.png')}}"/>
+              {%endif%}
+                 <span style="float:right">Fecha de cierre: {{ registro.fechaCierre|date('d/m/Y', timezone="America/Caracas") }} {{ registro.horaCierre|date('H:i', timezone="America/Caracas") }}</span> </a>   
+        
+      </li><br>
+      
+    </ol>
+   {% endfor %} #}
+
+</section>
+
+
+{% endblock %}  
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+
+{% endblock %}
+

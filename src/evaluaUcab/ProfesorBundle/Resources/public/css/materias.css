@@ -1,0 +1,58 @@
+/* 
+    Document   : materias
+    Created on : 09-oct-2014, 17:10:42
+    Author     : Legna Filloy
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+@font-face {
+    font-family: 'DKCrayon';
+    src: url('../fonts/DKCrayonCrumble.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body{
+     font-family: "Comic Sans MS";
+     width: 100%;
+}
+
+h2{
+    font-family: "DKCrayon"; 
+    margin-left: 1em;
+    margin-top: 1em;
+    font-weight: bold;
+
+}
+
+#bCrearMateria{
+  margin-left: 4em;
+  margin-top: 3.5em;
+    
+}
+
+#seccionMaterias{
+    background: white;
+    width: 65em;
+    min-height: 35em;
+    border-radius: 0.3em;
+    border:#969896 0.2em solid;
+    margin-left: 14em;
+    margin-top: -2.4em;
+   
+}
+
+#listaMaterias li {
+   list-style:none;
+   list-style-type: none;  
+}
+
+#pagMaterias{
+    margin-left: 30em;
+}
+
+/*seccionMaterias, #bCrearMateria{
+    display: inline-block;
+    vertical-align: top;
+}*/

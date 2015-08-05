@@ -1,0 +1,42 @@
+{% extends '::base.html.twig'%}
+{% set isProfesor = false %}
+
+{% block title %}Potafolio{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/headerAndFooter.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/application/css/menuPortafolio.css') }}" rel="stylesheet" type="text/css" />
+
+{% endblock %}
+
+{% block body %}
+  {#archivo que está en app/Resources, carga el header de la página#}
+{% include '::header.html.twig' %}
+
+{% if isProfesor == false %} 
+   {#Si el usuario logueado es estudiante, carga la navegacion de estudiante #}
+   {% include 'EstudianteBundle:Default:navEstudiante.html.twig' %}
+   {% include 'EstudianteBundle:Default:menuPortafolio.html.twig' %}
+{% else %}
+   {#Si el usuario logueado es profesor, carga la navegacion de profesor #}
+   {% include 'ProfesorBundle:Default:navProfesor.html.twig' %}
+   
+{% endif %}
+
+<section id="contenidoPortafolio">
+
+
+</section>
+
+
+{% endblock %}  
+
+
+
+{% block javascripts %}
+<script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+<script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+{% endblock %}
+

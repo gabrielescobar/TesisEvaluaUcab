@@ -1,0 +1,59 @@
+{% extends '::base.html.twig'%}
+
+{% block title %}Registrar Profesor{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('bundles/estudiante/css/normalize.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/estudiante/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/profesor/css/registroProfesor.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block body %}
+
+<div id="alerta" class="alert alert-danger alert-dismissible" role="alert" style="visibility: hidden">
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">x</span><span class="sr-only"></span></button>
+          <strong>holaaa</strong> 
+</div>
+
+<section id="recuadro">
+    <img id ="logo" src="{{asset('bundles/estudiante/images/bigLogo.png')}}"/>
+
+    <h2>Registro</h2>
+
+    <form action="{{ path('registro_profesor') }}" onSubmit="return validate()" method="post" {{form_enctype(formulario) }}>
+       
+       {{ form_widget(formulario.nombre,{ 'attr': {'placeholder': 'Nombre(es)', 'class':'lista', 'title':'Ej: Ana María','pattern':'([a-zA-Z]| |)+' } }) }} <span class="requerido">*</span>
+       {{ form_errors(formulario.nombre) }}   
+       {{ form_widget(formulario.apellido,{ 'attr': { 'placeholder': 'Apellidos', 'class':'lista', 'title':'Ej: Pérez López','pattern':'([a-zA-Z]| |)+' } }) }} <span class="requerido">*</span>
+       {{ form_errors(formulario.apellido) }}
+       {{ form_widget(formulario.cedula, { 'attr': { 'placeholder': 'Cédula', 'class':'lista', 'title':'Ej: 11111111','pattern':'[0-9]+' } }) }} <span class="requerido">*</span>
+       {{ form_errors(formulario.cedula) }}
+       {{ form_widget(formulario.correo, { 'attr': { 'placeholder': 'E-mail', 'class':'lista', 'title':'Ej: email@ejemplo.com','pattern':'[a-zA-Z0-9.+_-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+' } }) }} <span class="requerido">*</span>
+       {{ form_errors(formulario.correo) }}
+       {{ form_widget(formulario.password, { 'attr': { 'placeholder': 'Contraseña', 'class':'lista', 'title':'Ej: abc123'} }) }} <span class="requerido">*</span>
+       {{ form_errors(formulario.password) }}
+
+        <br><div  id="cargarFoto" name="div" class="fileUpload btn btn-success">
+            <span> Cargar Foto</span>
+            {{ form_widget(formulario.file, { 'attr': { 'class':'upload'} }) }}       
+        </div>
+         {{ form_errors(formulario.file) }}
+        <br>     
+        <input type="submit" value="Registrar" style="margin-left: 8em;margin-top: 2em" class="btn btn-danger" />
+        {{ form_rest(formulario) }}
+    </form>
+       <form method="link" action=" {{path('profesores')}} " > 
+   <button id ="bCrearMateria" style="margin-left: 16em; margin-top: -4em" type="submit" class="btn btn-info" >Regresar </button>
+ </form>
+    <div id="campos"> <span class="requerido">*</span> <span>Campos requeridos </span></div>
+ 
+    </section>
+   {% endblock %}         
+{% block javascripts %}
+
+   <script src="{{ asset('bundles/estudiante/js/jquery2.1.1.js') }}"></script>
+   <script src="{{ asset('bundles/estudiante/js/validate.js') }}"></script>  
+   <script src="{{ asset('bundles/estudiante/js/bootstrap.js') }}"></script>
+{% endblock %}
+
